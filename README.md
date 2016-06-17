@@ -17,9 +17,12 @@
 
 ```javascript
 var app = require('express')();
-var dashboard = require('node-dashboard');
+var analytics = require('node-dashboard');
+var dashboard = require('node-dashboard/dashboard');
 
-app.use(dashboard);
+app.use(analytics); // this will bind the analytics listener
+
+app.use('/admin', dashboard); // this will show the dashboard at the admin route
 
 app.listen('1337', function() {
     console.log('node-example-app listening on http://localhost:1337');
