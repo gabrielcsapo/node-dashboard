@@ -26,3 +26,39 @@ app.listen('1337', function() {
     done();
 });
 ```
+
+## Data
+
+> structure
+
+```json
+"vuk": [ // name of subdomain
+  {
+    "url": "/distribute", // name of url path
+    "traffic": [
+      {
+        "method": "GET", // HTTP Method
+        "message": "Not Found", // HTTP message
+        "status": 404, // HTTP Status
+        "date": "1466129236274", // Unix-Timestamp
+        "time": 0.6272679999999999, // Time in milliseconds
+        "geo": { // Geo Object
+          "range": [
+            117440512,
+            134219263
+          ],
+          "country": "US",
+          "region": "",
+          "city": "",
+          "ll": [
+            38,
+            -97
+          ],
+          "metro": 0
+        },
+        "referrer": "sibwe.gw" // Referrer information
+      }
+    ]
+  }
+]
+```
