@@ -1,0 +1,61 @@
+doctype html
+html
+    head
+        title node-dashboard
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        style
+            include ../node_modules/psychic-ui/dist/psychic-min.css
+        style.
+            .background-default {
+                background-color: rgba(207, 207, 196, 0.16) !important
+            }
+    body
+        div(class="text-center" id="content" style="width:100%;")
+            div.navbar.navbar-black
+                div.container
+                    div.navbar-title Title
+
+            each d, i in data
+                div.grid(class=(i % 2 == 0) ? 'background-default text-black' : 'background-white')
+                    div.col-2-12
+                    div.col-8-12
+                        h3=d.domain
+                        h5 Country Hits
+                        table.table.responsive
+                            thead
+                              tr
+                                th Country
+                                th Hits
+                            tbody
+                              each hits, country in d.countries
+                                tr
+                                    th=country
+                                    th=hits
+                        h5 Referrers
+                        table.table.responsive
+                            thead
+                              tr
+                                th Referrer
+                                th Hits
+                            tbody
+                              each hits, referrer in d.referrers
+                                tr
+                                    th=referrer
+                                    th=hits
+                        h5 Url Hits
+                        table.table.responsive
+                            thead
+                              tr
+                                th Url
+                                th Hits
+                            tbody
+                              each u in d.urls
+                                tr
+                                    th=u.url
+                                    th=u.count
+                        br
+                    div.col-2-12
+                br
+                hr.ellipsis
+                br
+                br
