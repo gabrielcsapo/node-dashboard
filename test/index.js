@@ -3,6 +3,7 @@ var chance = require('chance')();
 var spawn = require('child_process').spawn;
 var path = require('path');
 var fs = require('fs');
+var _ = require('underscore');
 
 describe('node-dashboard', function() {
 
@@ -15,24 +16,25 @@ describe('node-dashboard', function() {
 
     it('should spawn node-dashboard', function(done) {
         var app = require('express')();
-        var dashboard = require('../index');
+        var analytics = require('../index');
 
-        app.use(dashboard);
+        app.use(analytics);
 
         app.listen('1337', function() {
-            console.log('node-dashboard listening on http://localhost:1337');
             done();
         });
-
     });
+
+    var sub = ['vuence', 'sav', 'lefmacto', 'luddas', 'wean', 'foupa'];
+    var referrer = ['noruc.gm', 'imajupet.hn','milo.gt','wubi.vn','rekwo.nz'];
 
     for(var i = 0; i < 10; i++) {
         it('should test if routes are bound', function(done) {
             request('http://localhost:1337')
                 .get('/distribute')
-                .set('Host', chance.word() + '.example.com')
+                .set('Host', _.sample(sub) + '.example.com')
                 .set('x-forwarded-for', chance.ip())
-                .set('referrer', chance.domain())
+                .set('referrer', _.sample(referrer))
                 .expect(200, function(err) {
                     done();
                 });
