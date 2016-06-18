@@ -106,7 +106,6 @@ var parseUrlTimeList = function(d) {
 
 var parse = function() {
     var data = [];
-
     // This is parsing per hostname
     for (var key in db.object) {
         var d = db.object[key];
