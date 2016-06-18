@@ -28,7 +28,7 @@ describe('node-dashboard', function() {
     var sub = ['vuence', 'sav', 'lefmacto', 'luddas', 'wean', 'foupa'];
     var referrer = ['noruc.gm', 'imajupet.hn','milo.gt','wubi.vn','rekwo.nz'];
 
-    for(var i = 0; i < 10; i++) {
+    for(var i = 0; i < 25; i++) {
         it('should test if routes are bound', function(done) {
             request('http://localhost:1337')
                 .get('/distribute')

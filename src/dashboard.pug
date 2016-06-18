@@ -42,6 +42,17 @@ html
                                 tr
                                     th=referrer
                                     th=hits
+                        h5 Status
+                        table.table.responsive
+                            thead
+                              tr
+                                th Status
+                                th Hits
+                            tbody
+                              each hits, status in d.status
+                                tr
+                                    th=status
+                                    th=hits
                         h5 Url Hits
                         table.table.responsive
                             thead
@@ -53,6 +64,17 @@ html
                                 tr
                                     th=u.url
                                     th=u.count
+                        h5 Url Average Response
+                        table.table.responsive
+                            thead
+                              tr
+                                th Url
+                                th Average Time
+                            tbody
+                              each u in d.urlAverageTime
+                                tr
+                                    th=u.url
+                                    th=u.time
                         br
                     div.col-2-12
                 br
