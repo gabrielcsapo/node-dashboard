@@ -26,7 +26,7 @@ module.exports = function(grunt) {
                         type: 'remote',
                         src: 'http://localhost:1337/admin',
                         dest: 'dashboard.png',
-                        delay: 100,
+                        delay: 100
                     }
                 ],
                 viewport: ['1920x1080','1024x768','640x960', '320x480'] // any (X)x(Y) size

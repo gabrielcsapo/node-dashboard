@@ -11,5 +11,5 @@ app.get('/', function(req, res) {
 app.use('/admin', dashboard);
 
 app.listen('1337', function() {
-    console.log('node-dashboard listening on http://localhost:1337');
+    console.log('node-dashboard listening on http://localhost:1337'); // eslint-disable-line no-console
 });
