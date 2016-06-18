@@ -9,6 +9,10 @@ html
             .background-default {
                 background-color: rgba(207, 207, 196, 0.16) !important
             }
+        script
+            include ../node_modules/chart.js/dist/Chart.bundle.min.js
+        script
+            include dashboard.js
     body
         div(class="text-center" id="content" style="width:100%;")
             div.navbar.navbar-black
@@ -16,68 +20,136 @@ html
                     div.navbar-title node-dashboard
 
             each d, i in data
-                div.grid(class=(i % 2 == 0) ? 'background-default text-black' : 'background-white')
+                div.grid(class=(i % 2 == 0) ? 'background-default text-black' : 'background-white' data-storedvalues=d)
                     div.col-2-12
                     div.col-8-12
                         h3=d.domain
-                        h5 Country Hits
-                        table.table.responsive
-                            thead
-                              tr
-                                th Country
-                                th Hits
-                            tbody
-                              each hits, country in d.countries
-                                tr
-                                    th=country
-                                    th=hits
-                        h5 Referrers
-                        table.table.responsive
-                            thead
-                              tr
-                                th Referrer
-                                th Hits
-                            tbody
-                              each hits, referrer in d.referrers
-                                tr
-                                    th=referrer
-                                    th=hits
-                        h5 Status
-                        table.table.responsive
-                            thead
-                              tr
-                                th Status
-                                th Hits
-                            tbody
-                              each hits, status in d.status
-                                tr
-                                    th=status
-                                    th=hits
-                        h5 Url Hits
-                        table.table.responsive
-                            thead
-                              tr
-                                th Url
-                                th Hits
-                            tbody
-                              each u in d.urls
-                                tr
-                                    th=u.url
-                                    th=u.count
-                        h5 Url Average Response
-                        table.table.responsive
-                            thead
-                              tr
-                                th Url
-                                th Average Time
-                            tbody
-                              each u in d.urlAverageTime
-                                tr
-                                    th=u.url
-                                    th=u.time
-                        br
+                        form(id=d.domain + "-countries")
+                            div.nav-tab(style="height:525px;")
+                                ul
+                                    li
+                                        input(type="radio" name="nav-tab-label" id="label-graph-countries-" + d.domain)
+                                        label(for="label-graph-countries-" + d.domain) Graph
+                                        div(style="background-color: transparent;")
+                                            canvas
+                                    li
+                                        input(type="radio" name="nav-tab-label" id="label-table-countries-" + d.domain)
+                                        label(for="label-table-countries-" + d.domain) Table
+                                        div(style="background-color: transparent;")
+                                            h5 Country Hits
+                                            table.table.responsive
+                                                thead
+                                                  tr
+                                                    th Country
+                                                    th Hits
+                                                tbody
+                                                  each hits, country in d.countries
+                                                    tr
+                                                        th=country
+                                                        th=hits
+
+                        form(id=d.domain + "-referrers")
+                            div.nav-tab(style="height:525px;")
+                                ul
+                                    li
+                                        input(type="radio" name="nav-tab-label" id="label-graph-referrers-" + d.domain)
+                                        label(for="label-graph-referrers-" + d.domain) Graph
+                                        div(style="background-color: transparent;")
+                                            canvas
+                                    li
+                                        input(type="radio" name="nav-tab-label" id="label-table-referrers-" + d.domain)
+                                        label(for="label-table-referrers-" + d.domain) Table
+                                        div(style="background-color: transparent;")
+                                            h5 Referrers
+                                            table.table.responsive
+                                                thead
+                                                  tr
+                                                    th Referrer
+                                                    th Hits
+                                                tbody
+                                                  each hits, referrer in d.referrers
+                                                    tr
+                                                        th=referrer
+                                                        th=hits
+                        form(id=d.domain + "-status")
+                            div.nav-tab(style="height:525px;")
+                                ul
+                                    li
+                                        input(type="radio" name="nav-tab-label" id="label-graph-status-" + d.domain)
+                                        label(for="label-graph-status-" + d.domain) Graph
+                                        div(style="background-color: transparent;")
+                                            canvas
+                                    li
+                                        input(type="radio" name="nav-tab-label" id="label-table-status-" + d.domain)
+                                        label(for="label-table-status-" + d.domain) Table
+                                        div(style="background-color: transparent;")
+                                            h5 Status
+                                            table.table.responsive
+                                                thead
+                                                  tr
+                                                    th Status
+                                                    th Hits
+                                                tbody
+                                                  each hits, status in d.status
+                                                    tr
+                                                        th=status
+                                                        th=hits
+                        form(id=d.domain + "-urls")
+                            div.nav-tab(style="height:525px;")
+                                ul
+                                    li
+                                        input(type="radio" name="nav-tab-label" id="label-graph-urls-" + d.domain)
+                                        label(for="label-graph-urls-" + d.domain) Graph
+                                        div(style="background-color: transparent;")
+                                            canvas
+                                    li
+                                        input(type="radio" name="nav-tab-label" id="label-table-urls-" + d.domain)
+                                        label(for="label-table-urls-" + d.domain) Table
+                                        div(style="background-color: transparent;")
+                                            h5 Url Hits
+                                            table.table.responsive
+                                                thead
+                                                  tr
+                                                    th Url
+                                                    th Hits
+                                                tbody
+                                                  each u in d.urls
+                                                    tr
+                                                        th=u.url
+                                                        th=u.count
+
+                        form(id=d.domain + "-urlAverageTime")
+                            div.nav-tab(style="height:525px;")
+                                ul
+                                    li
+                                        input(type="radio" name="nav-tab-label" id="label-graph-urlAverageTime-" + d.domain)
+                                        label(for="label-graph-urlAverageTime-" + d.domain) Graph
+                                        div(style="background-color: transparent;")
+                                            canvas
+                                    li
+                                        input(type="radio" name="nav-tab-label" id="label-table-urlAverageTime-" + d.domain)
+                                        label(for="label-table-urlAverageTime-" + d.domain) Table
+                                        div(style="background-color: transparent;")
+                                            h5 Url Average Response
+                                            table.table.responsive
+                                                thead
+                                                  tr
+                                                    th Url
+                                                    th Average Time
+                                                tbody
+                                                  each u in d.urlAverageTime
+                                                    tr
+                                                        th=u.url
+                                                        th=u.time
                     div.col-2-12
                 br
                 hr.ellipsis
                 br
                 br
+        script.
+            document.addEventListener("DOMContentLoaded", function(event) {
+                var grids = document.querySelectorAll('.grid');
+                [].forEach.call(grids, function(grid) {
+                    createGraphs(grid.dataset['storedvalues']);
+                });
+            });

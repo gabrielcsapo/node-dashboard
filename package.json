@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/gabrielcsapo/node-dashboard#readme",
   "dependencies": {
+    "chart.js": "^2.1.6",
     "geoip-lite": "^1.1.8",
     "moment": "^2.13.0",
     "node-flat-db": "^0.2.1",
