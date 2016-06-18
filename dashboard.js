@@ -115,7 +115,7 @@ var parse = function() {
             countries: parseCountryList(d),
             urls: parseUrlList(d),
             urlAverageTime: parseUrlAverageTime(d),
-            urlTimes: parseUrlList(d),
+            urlTimes: parseUrlTimeList(d),
             referrers: parseReferrerList(d),
             status: parseStatusList(d)
         });
@@ -123,7 +123,7 @@ var parse = function() {
     return data;
 }
 
-module.exports = function(req, res, next) {
+module.exports = function(req, res) {
     var html = pug.renderFile(path.resolve(__dirname, 'src', 'dashboard.pug'), {
         data: parse()
     });

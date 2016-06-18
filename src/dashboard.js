@@ -1,5 +1,5 @@
 /** 'countries', 'referrers', 'status', 'urls', 'urlAverageTime' **/
-createGraphs = function(d) {
+var createGraphs = function(d) { // eslint-disable-line no-unused-vars
     d = JSON.parse(d);
     createCountryGraph(d);
     createReferrersGraph(d);
@@ -8,30 +8,28 @@ createGraphs = function(d) {
     createUrlAverageTime(d);
 }
 
-createUrlAverageTime = function(d) {
+var createUrlAverageTime = function(d) {
     var labels = [];
     var data = [];
     document.getElementById('label-graph-urlAverageTime-' + d.domain).checked = true;
     Object.keys(d.urlAverageTime).forEach(function(u) {
-        console.log(d.urlAverageTime[u]);
         labels.push(d.urlAverageTime[u].url);
         data.push(d.urlAverageTime[u].time);
     });
-    console.log(document.querySelector('#' + d.domain + '-urlAverageTime canvas'));
-    new Chart(document.querySelector('#' + d.domain + '-urlAverageTime canvas'), {
+    new Chart(document.querySelector('#' + d.domain + '-urlAverageTime canvas'), { // eslint-disable-line no-undef
         type: 'bar',
         data: {
             labels: labels,
             datasets: [{
                 label: "UrlAverageTime",
-                data: data,
+                data: data
             }]
         },
         options: {}
     });
 }
 
-createUrlGraph = function(d) {
+var createUrlGraph = function(d) {
     var labels = [];
     var data = [];
     document.getElementById('label-graph-urls-' + d.domain).checked = true;
@@ -39,20 +37,20 @@ createUrlGraph = function(d) {
         labels.push(d.urls[u].url);
         data.push(d.urls[u].count);
     });
-    new Chart(document.querySelector('#' + d.domain + '-urls canvas'), {
+    new Chart(document.querySelector('#' + d.domain + '-urls canvas'), { // eslint-disable-line no-undef
         type: 'bar',
         data: {
             labels: labels,
             datasets: [{
                 label: "Url Hits",
-                data: data,
+                data: data
             }]
         },
         options: {}
     });
 }
 
-createStatusGraph = function(d) {
+var createStatusGraph = function(d) {
     var labels = [];
     var data = [];
     document.getElementById('label-graph-status-' + d.domain).checked = true;
@@ -60,20 +58,20 @@ createStatusGraph = function(d) {
         labels.push(s);
         data.push(d.status[s]);
     });
-    new Chart(document.querySelector('#' + d.domain + '-status canvas'), {
+    new Chart(document.querySelector('#' + d.domain + '-status canvas'), { // eslint-disable-line no-undef
         type: 'bar',
         data: {
             labels: labels,
             datasets: [{
                 label: "HTTP Statuses",
-                data: data,
+                data: data
             }]
         },
         options: {}
     });
 }
 
-createReferrersGraph = function(d) {
+var createReferrersGraph = function(d) {
     var labels = [];
     var data = [];
     document.getElementById('label-graph-referrers-' + d.domain).checked = true;
@@ -81,20 +79,20 @@ createReferrersGraph = function(d) {
         labels.push(r);
         data.push(d.referrers[r]);
     });
-    new Chart(document.querySelector('#' + d.domain + '-referrers canvas'), {
+    new Chart(document.querySelector('#' + d.domain + '-referrers canvas'), { // eslint-disable-line no-undef
         type: 'bar',
         data: {
             labels: labels,
             datasets: [{
                 label: "Refferers",
-                data: data,
+                data: data
             }]
         },
         options: {}
     });
 }
 
-createCountryGraph = function(d) {
+var createCountryGraph = function(d) {
     var labels = [];
     var data = [];
     document.getElementById('label-graph-countries-' + d.domain).checked = true;
@@ -102,13 +100,13 @@ createCountryGraph = function(d) {
         labels.push(c);
         data.push(d.countries[c]);
     });
-    new Chart(document.querySelector('#' + d.domain + '-countries canvas'), {
+    new Chart(document.querySelector('#' + d.domain + '-countries canvas'), { // eslint-disable-line no-undef
         type: 'bar',
         data: {
             labels: labels,
             datasets: [{
                 label: "Countries",
-                data: data,
+                data: data
             }]
         },
         options: {}

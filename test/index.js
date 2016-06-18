@@ -1,6 +1,5 @@
 var request = require('supertest');
 var chance = require('chance')();
-var spawn = require('child_process').spawn;
 var path = require('path');
 var fs = require('fs');
 var _ = require('underscore');
@@ -10,7 +9,7 @@ describe('node-dashboard', function() {
     before(function(done) {
         try {
             fs.unlinkSync(path.resolve(__dirname, '..', 'dashboard.json'));
-        } catch(ex) {};
+        } catch(ex) {} // eslint-disable-line no-empty
         done();
     });
 
@@ -35,7 +34,10 @@ describe('node-dashboard', function() {
                 .set('Host', _.sample(sub) + '.example.com')
                 .set('x-forwarded-for', chance.ip())
                 .set('referrer', _.sample(referrer))
-                .expect(200, function(err) {
+                .end(function(err) {
+                    if (err) {
+                        throw err;
+                    }
                     done();
                 });
         });
