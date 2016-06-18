@@ -34,7 +34,7 @@ describe('node-dashboard', function() {
                 .set('Host', _.sample(sub) + '.example.com')
                 .set('x-forwarded-for', chance.ip())
                 .set('referrer', _.sample(referrer))
-                .expect(200, function(err) {
+                .end(function(err) {
                     if (err) {
                         throw err;
                     }
