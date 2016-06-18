@@ -43,7 +43,7 @@ var parseUrlAverageTime = function(d) {
             url: route.url,
             time: _.pluck(route.traffic, 'time').reduce(function(a, b) {
                 return a + b
-            }) + 'ms'
+            })
         }
     });
 }
