@@ -5,6 +5,21 @@ var db = flat('dashboard.json', {
 var path = require('path');
 var pug = require('pug');
 var _ = require('underscore');
+var os = require('os');
+var moment = require('moment');
+var system = {
+    cpu: [],
+    mem: []
+};
+
+setInterval(function() {
+    system.cpu.push([moment().format(), os.loadavg()[0]]);
+    system.mem.push([moment().format(), (process.memoryUsage().rss / 1024 / 1024)]);
+    if(system.mem.length > 30) {
+        system.mem.pop();
+        system.cpu.pop();
+    }
+}, 10000);
 
 /**
 ex: returns { KR: 1, FR: 1, CA: 1, NO: 1, RU: 1, US: 2 }
@@ -125,7 +140,8 @@ var parse = function() {
 
 module.exports = function(req, res) {
     var html = pug.renderFile(path.resolve(__dirname, 'src', 'dashboard.pug'), {
-        data: parse()
+        traffic: parse(),
+        os: system
     });
     res.send(html);
 };

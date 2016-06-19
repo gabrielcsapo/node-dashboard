@@ -1,11 +1,57 @@
 /** 'countries', 'referrers', 'status', 'urls', 'urlAverageTime' **/
 var createGraphs = function(d) { // eslint-disable-line no-unused-vars
-    d = JSON.parse(d);
-    createCountryGraph(d);
-    createReferrersGraph(d);
-    createStatusGraph(d);
-    createUrlGraph(d);
-    createUrlAverageTime(d);
+    if(d) {
+        d = JSON.parse(d);
+        createCountryGraph(d);
+        createReferrersGraph(d);
+        createStatusGraph(d);
+        createUrlGraph(d);
+        createUrlAverageTime(d);
+    }
+}
+
+var createOSGraphs = function() {
+    var labels = [];
+    var data = [];
+    var d = JSON.parse(document.getElementById('memory-graph').dataset['storedvalues']);
+    console.log(d);
+    d.forEach(function(s) {
+        console.log(s);
+        data.push(s[1]);
+        labels.push(moment(s[0]).format('HH:mm:SS'));
+    });
+    new Chart(document.querySelector('#memory-graph canvas'), { // eslint-disable-line no-undef
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "Memory Usage",
+                data: data
+            }]
+        },
+        options: {}
+    });
+
+    var labels = [];
+    var data = [];
+    var d = JSON.parse(document.getElementById('cpu-graph').dataset['storedvalues']);
+    console.log(d);
+    d.forEach(function(s) {
+        console.log(s);
+        data.push(s[1]);
+        labels.push(moment(s[0]).format('HH:mm:SS'));
+    });
+    new Chart(document.querySelector('#cpu-graph canvas'), { // eslint-disable-line no-undef
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "CPU Usage",
+                data: data
+            }]
+        },
+        options: {}
+    });
 }
 
 var createUrlAverageTime = function(d) {

@@ -12,6 +12,8 @@ html
         script
             include ../node_modules/chart.js/dist/Chart.bundle.min.js
         script
+            include ../node_modules/moment/moment.js
+        script
             include dashboard.js
     body
         div(class="text-center" id="content" style="width:100%;")
@@ -19,7 +21,13 @@ html
                 div.container
                     div.navbar-title node-dashboard
 
-            each d, i in data
+            div.grid
+                div.col-6-12(id="memory-graph" data-storedvalues=os.mem)
+                    canvas
+                div.col-6-12(id="cpu-graph" data-storedvalues=os.cpu)
+                    canvas
+
+            each d, i in traffic
                 div.grid(class=(i % 2 == 0) ? 'background-default text-black' : 'background-white' data-storedvalues=d)
                     div.col-2-12
                     div.col-8-12
@@ -148,6 +156,7 @@ html
                 br
         script.
             document.addEventListener("DOMContentLoaded", function(event) {
+                createOSGraphs();
                 var grids = document.querySelectorAll('.grid');
                 [].forEach.call(grids, function(grid) {
                     createGraphs(grid.dataset['storedvalues']);
