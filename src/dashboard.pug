@@ -18,7 +18,7 @@ html
                     div.navbar-title node-dashboard
 
             div.grid
-                div.col-4-12
+                div.col-lg-4-12.col-sm-12-12
                     ul.list(style="padding:50px;")
                         li.list-item
                             div.list-item-left Version
@@ -28,9 +28,9 @@ html
                             div.list-item-left Memory
                             div.list-item-right
                                 div.badge.badge-black=info.memory
-                div.col-4-12(id="memory-graph" data-storedvalues=os.mem)
+                div.col-lg-4-12.col-sm-12-12(id="memory-graph" data-storedvalues=os.mem)
                     canvas
-                div.col-4-12(id="cpu-graph" data-storedvalues=os.cpu)
+                div.col-lg-4-12.col-sm-12-12(id="cpu-graph" data-storedvalues=os.cpu)
                     canvas
 
             each d, i in traffic
