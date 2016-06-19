@@ -18,9 +18,19 @@ html
                     div.navbar-title node-dashboard
 
             div.grid
-                div.col-6-12(id="memory-graph" data-storedvalues=os.mem)
+                div.col-4-12
+                    ul.list(style="padding:50px;")
+                        li.list-item
+                            div.list-item-left Version
+                            div.list-item-right
+                                div.badge.badge-black=info.version
+                        li.list-item
+                            div.list-item-left Memory
+                            div.list-item-right
+                                div.badge.badge-black=info.memory
+                div.col-4-12(id="memory-graph" data-storedvalues=os.mem)
                     canvas
-                div.col-6-12(id="cpu-graph" data-storedvalues=os.cpu)
+                div.col-4-12(id="cpu-graph" data-storedvalues=os.cpu)
                     canvas
 
             each d, i in traffic

@@ -141,7 +141,11 @@ var parse = function() {
 module.exports = function(req, res) {
     var html = pug.renderFile(path.resolve(__dirname, 'src', 'dashboard.pug'), {
         traffic: parse(),
-        os: system
+        os: system,
+        info: {
+            version: process.version,
+            memory: (os.totalmem() / 1024 / 1024) + ' mb'
+        }
     });
     res.send(html);
 };
