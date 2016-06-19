@@ -18,7 +18,7 @@ var createOSGraphs = function() {
     var d = JSON.parse(document.getElementById('memory-graph').dataset['storedvalues']);
     d.forEach(function(s) {
         data.push(s[1]);
-        labels.push(moment(s[0]).format('HH:mm:SS'));
+        labels.push(moment(s[0]).format('HH:mm:ss'));
     });
     var color = chance.color({format: 'rgb'});
     new Chart(document.querySelector('#memory-graph canvas'), { // eslint-disable-line no-undef
@@ -40,7 +40,7 @@ var createOSGraphs = function() {
     var d = JSON.parse(document.getElementById('cpu-graph').dataset['storedvalues']);
     d.forEach(function(s) {
         data.push(s[1]);
-        labels.push(moment(s[0]).format('HH:mm:SS'));
+        labels.push(moment(s[0]).format('HH:mm:ss'));
     });
     var color = chance.color({format: 'rgb'});
     new Chart(document.querySelector('#cpu-graph canvas'), { // eslint-disable-line no-undef
