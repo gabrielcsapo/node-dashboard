@@ -35,7 +35,9 @@ window.createOSGraphs = function() {
                     borderColor: color.replace(')', ',0.1)')
                 }]
             },
-            options: {}
+            options: {
+                maintainAspectRatio: false
+            }
         });
     }());
 
@@ -59,7 +61,9 @@ window.createOSGraphs = function() {
                     borderColor: color.replace(')', ',0.1)')
                 }]
             },
-            options: {}
+            options: {
+                maintainAspectRatio: false
+            }
         });
     }());
 }
@@ -84,7 +88,9 @@ var createUrlAverageTime = function(d) {
                 borderColor: color.replace(')', ',0.1)')
             }]
         },
-        options: {}
+        options: {
+            maintainAspectRatio: false
+        }
     });
 }
 
@@ -108,7 +114,9 @@ var createUrlGraph = function(d) {
                 borderColor: color.replace(')', ',0.1)')
             }]
         },
-        options: {}
+        options: {
+            maintainAspectRatio: false
+        }
     });
 }
 
@@ -132,7 +140,9 @@ var createStatusGraph = function(d) {
                 borderColor: color.replace(')', ',0.1)')
             }]
         },
-        options: {}
+        options: {
+            maintainAspectRatio: false
+        }
     });
 }
 
@@ -156,7 +166,9 @@ var createReferrersGraph = function(d) {
                 borderColor: color.replace(')', ',0.1)')
             }]
         },
-        options: {}
+        options: {
+            maintainAspectRatio: false
+        }
     });
 }
 
@@ -180,6 +192,15 @@ var createCountryGraph = function(d) {
                 borderColor: color.replace(')', ',0.1)')
             }]
         },
-        options: {}
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
     });
 }

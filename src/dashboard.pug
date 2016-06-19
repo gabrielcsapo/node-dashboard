@@ -29,9 +29,9 @@ html
                             div.list-item-right
                                 div.badge.badge-black=info.memory
                 div.col-lg-4-12.col-sm-12-12(id="memory-graph" data-storedvalues=os.mem)
-                    canvas
+                    canvas(height="325")
                 div.col-lg-4-12.col-sm-12-12(id="cpu-graph" data-storedvalues=os.cpu)
-                    canvas
+                    canvas(height="325")
 
             each d, i in traffic
                 div.grid(class=(i % 2 == 0) ? 'background-default text-black' : 'background-white' data-storedvalues=d)
