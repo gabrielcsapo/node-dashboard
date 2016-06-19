@@ -10,13 +10,7 @@ html
                 background-color: rgba(207, 207, 196, 0.16) !important
             }
         script
-            include ../node_modules/chart.js/dist/Chart.bundle.min.js
-        script
-            include ../node_modules/chance/dist/chance.min.js
-        script
-            include ../node_modules/moment/moment.js
-        script
-            include dashboard.js
+            include bundle.js
     body
         div(class="text-center" id="content" style="width:100%;")
             div.navbar.navbar-black
@@ -158,9 +152,9 @@ html
                 br
         script.
             document.addEventListener("DOMContentLoaded", function(event) {
-                createOSGraphs();
+                window.createOSGraphs();
                 var grids = document.querySelectorAll('.grid');
                 [].forEach.call(grids, function(grid) {
-                    createGraphs(grid.dataset['storedvalues']);
+                    window.createGraphs(grid.dataset['storedvalues']);
                 });
             });

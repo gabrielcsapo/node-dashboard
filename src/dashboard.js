@@ -1,7 +1,9 @@
 /** 'countries', 'referrers', 'status', 'urls', 'urlAverageTime' **/
-var chance = Chance();
+var Chart = require('chart.js');
+var moment = require('moment');
+var chance = require('chance')();
 
-var createGraphs = function(d) { // eslint-disable-line no-unused-vars
+window.createGraphs = function(d) {
     if(d) {
         d = JSON.parse(d);
         createCountryGraph(d);
@@ -12,50 +14,54 @@ var createGraphs = function(d) { // eslint-disable-line no-unused-vars
     }
 }
 
-var createOSGraphs = function() {
-    var labels = [];
-    var data = [];
-    var d = JSON.parse(document.getElementById('memory-graph').dataset['storedvalues']);
-    d.forEach(function(s) {
-        data.push(s[1]);
-        labels.push(moment(s[0]).format('HH:mm:ss'));
-    });
-    var color = chance.color({format: 'rgb'});
-    new Chart(document.querySelector('#memory-graph canvas'), { // eslint-disable-line no-undef
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: "Memory Usage",
-                data: data,
-                backgroundColor: color,
-                borderColor: color.replace(')', ',0.1)'),
-            }]
-        },
-        options: {}
-    });
+window.createOSGraphs = function() {
+    (function() {
+        var labels = [];
+        var data = [];
+        var d = JSON.parse(document.getElementById('memory-graph').dataset['storedvalues']);
+        d.forEach(function(s) {
+            data.push(s[1]);
+            labels.push(moment(s[0]).format('HH:mm:ss'));
+        });
+        var color = chance.color({format: 'rgb'});
+        new Chart(document.querySelector('#memory-graph canvas'), {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: "Memory Usage",
+                    data: data,
+                    backgroundColor: color,
+                    borderColor: color.replace(')', ',0.1)')
+                }]
+            },
+            options: {}
+        });
+    }());
 
-    var labels = [];
-    var data = [];
-    var d = JSON.parse(document.getElementById('cpu-graph').dataset['storedvalues']);
-    d.forEach(function(s) {
-        data.push(s[1]);
-        labels.push(moment(s[0]).format('HH:mm:ss'));
-    });
-    var color = chance.color({format: 'rgb'});
-    new Chart(document.querySelector('#cpu-graph canvas'), { // eslint-disable-line no-undef
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: "CPU Usage",
-                data: data,
-                backgroundColor: color,
-                borderColor: color.replace(')', ',0.1)'),
-            }]
-        },
-        options: {}
-    });
+    (function() {
+        var labels = [];
+        var data = [];
+        var d = JSON.parse(document.getElementById('cpu-graph').dataset['storedvalues']);
+        d.forEach(function(s) {
+            data.push(s[1]);
+            labels.push(moment(s[0]).format('HH:mm:ss'));
+        });
+        var color = chance.color({format: 'rgb'});
+        new Chart(document.querySelector('#cpu-graph canvas'), {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: "CPU Usage",
+                    data: data,
+                    backgroundColor: color,
+                    borderColor: color.replace(')', ',0.1)')
+                }]
+            },
+            options: {}
+        });
+    }());
 }
 
 var createUrlAverageTime = function(d) {
@@ -67,7 +73,7 @@ var createUrlAverageTime = function(d) {
         data.push(d.urlAverageTime[u].time);
     });
     var color = chance.color({format: 'rgb'});
-    new Chart(document.querySelector('#' + d.domain + '-urlAverageTime canvas'), { // eslint-disable-line no-undef
+    new Chart(document.querySelector('#' + d.domain + '-urlAverageTime canvas'), {
         type: 'bar',
         data: {
             labels: labels,
@@ -75,7 +81,7 @@ var createUrlAverageTime = function(d) {
                 label: "UrlAverageTime",
                 data: data,
                 backgroundColor: color,
-                borderColor: color.replace(')', ',0.1)'),
+                borderColor: color.replace(')', ',0.1)')
             }]
         },
         options: {}
@@ -91,7 +97,7 @@ var createUrlGraph = function(d) {
         data.push(d.urls[u].count);
     });
     var color = chance.color({format: 'rgb'});
-    new Chart(document.querySelector('#' + d.domain + '-urls canvas'), { // eslint-disable-line no-undef
+    new Chart(document.querySelector('#' + d.domain + '-urls canvas'), {
         type: 'bar',
         data: {
             labels: labels,
@@ -99,7 +105,7 @@ var createUrlGraph = function(d) {
                 label: "Url Hits",
                 data: data,
                 backgroundColor: color,
-                borderColor: color.replace(')', ',0.1)'),
+                borderColor: color.replace(')', ',0.1)')
             }]
         },
         options: {}
@@ -115,7 +121,7 @@ var createStatusGraph = function(d) {
         data.push(d.status[s]);
     });
     var color = chance.color({format: 'rgb'});
-    new Chart(document.querySelector('#' + d.domain + '-status canvas'), { // eslint-disable-line no-undef
+    new Chart(document.querySelector('#' + d.domain + '-status canvas'), {
         type: 'bar',
         data: {
             labels: labels,
@@ -123,7 +129,7 @@ var createStatusGraph = function(d) {
                 label: "HTTP Statuses",
                 data: data,
                 backgroundColor: color,
-                borderColor: color.replace(')', ',0.1)'),
+                borderColor: color.replace(')', ',0.1)')
             }]
         },
         options: {}
@@ -139,7 +145,7 @@ var createReferrersGraph = function(d) {
         data.push(d.referrers[r]);
     });
     var color = chance.color({format: 'rgb'});
-    new Chart(document.querySelector('#' + d.domain + '-referrers canvas'), { // eslint-disable-line no-undef
+    new Chart(document.querySelector('#' + d.domain + '-referrers canvas'), {
         type: 'bar',
         data: {
             labels: labels,
@@ -147,7 +153,7 @@ var createReferrersGraph = function(d) {
                 label: "Refferers",
                 data: data,
                 backgroundColor: color,
-                borderColor: color.replace(')', ',0.1)'),
+                borderColor: color.replace(')', ',0.1)')
             }]
         },
         options: {}
@@ -163,7 +169,7 @@ var createCountryGraph = function(d) {
         data.push(d.countries[c]);
     });
     var color = chance.color({format: 'rgb'});
-    new Chart(document.querySelector('#' + d.domain + '-countries canvas'), { // eslint-disable-line no-undef
+    new Chart(document.querySelector('#' + d.domain + '-countries canvas'), {
         type: 'bar',
         data: {
             labels: labels,
@@ -171,7 +177,7 @@ var createCountryGraph = function(d) {
                 label: "Countries",
                 data: data,
                 backgroundColor: color,
-                borderColor: color.replace(')', ',0.1)'),
+                borderColor: color.replace(')', ',0.1)')
             }]
         },
         options: {}
