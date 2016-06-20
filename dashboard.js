@@ -21,6 +21,35 @@ setInterval(function() {
     }
 }, 10000);
 
+var parseOSList = function(d) {
+    return _.flatten(_.map(d, function(route) {
+        return _.pluck(_.pluck(_.compact(_.pluck(route.traffic, 'ua')), 'os'), 'name')
+    })).reduce(function(acc, curr) {
+        if (typeof acc[curr] == 'undefined') {
+            acc[curr] = 1;
+        } else {
+            acc[curr] += 1;
+        }
+        return acc;
+    }, {});
+}
+
+/**
+ex: returns { Chrome: 11, Firefox: 4, IE: 5, Safari: 1 }
+**/
+var parseBrowserList = function(d) {
+    return _.flatten(_.map(d, function(route) {
+        return _.pluck(_.pluck(_.compact(_.pluck(route.traffic, 'ua')), 'browser'), 'name')
+    })).reduce(function(acc, curr) {
+        if (typeof acc[curr] == 'undefined') {
+            acc[curr] = 1;
+        } else {
+            acc[curr] += 1;
+        }
+        return acc;
+    }, {});
+}
+
 /**
 ex: returns { KR: 1, FR: 1, CA: 1, NO: 1, RU: 1, US: 2 }
 **/
@@ -132,7 +161,9 @@ var parse = function() {
             urlAverageTime: parseUrlAverageTime(d),
             urlTimes: parseUrlTimeList(d),
             referrers: parseReferrerList(d),
-            status: parseStatusList(d)
+            status: parseStatusList(d),
+            browsers: parseBrowserList(d),
+            os: parseOSList(d)
         });
     }
     return data;

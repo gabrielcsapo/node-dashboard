@@ -1,6 +1,7 @@
 var responseTime = require('response-time');
 var moment = require('moment');
 var geoip = require('geoip-lite');
+var parser = require('ua-parser-js');
 
 var flat = require('node-flat-db');
 var db = flat('dashboard.json', {
@@ -17,6 +18,7 @@ module.exports = responseTime(function(req, res, time) {
         req.connection.remoteAddress ||
         req.socket.remoteAddress ||
         req.connection.socket.remoteAddress;
+    var ua = parser(req.headers['user-agent']);
     var geo = geoip.lookup(ip);
     var referrer = req.get('Referrer');
     var hostname = req.headers.host.split(":")[0];
@@ -33,7 +35,8 @@ module.exports = responseTime(function(req, res, time) {
             date: moment().format('x'),
             time: time,
             geo: geo,
-            referrer: referrer
+            referrer: referrer,
+            ua: ua
         })
     } else {
         db(hostname).push({
@@ -45,7 +48,8 @@ module.exports = responseTime(function(req, res, time) {
                 date: moment().format('x'),
                 time: time,
                 geo: geo,
-                referrer: referrer
+                referrer: referrer,
+                ua: ua
             }]
         });
     }
