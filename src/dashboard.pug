@@ -18,7 +18,7 @@ html
                     div.navbar-title node-dashboard
 
             div.grid
-                div.col-lg-4-12.col-sm-12-12
+                div.col-lg-4-12.col-sm-12-12.col-xs-12-12
                     ul.list(style="padding:50px;")
                         li.list-item
                             div.list-item-left Version
@@ -28,9 +28,9 @@ html
                             div.list-item-left Memory
                             div.list-item-right
                                 div.badge.badge-black=info.memory
-                div.col-lg-4-12.col-sm-12-12(id="memory-graph" data-storedvalues=os.mem)
+                div.col-lg-4-12.col-sm-12-12.col-xs-12-12(id="memory-graph" data-storedvalues=os.mem)
                     canvas(height="325")
-                div.col-lg-4-12.col-sm-12-12(id="cpu-graph" data-storedvalues=os.cpu)
+                div.col-lg-4-12.col-sm-12-12.col-xs-12-12(id="cpu-graph" data-storedvalues=os.cpu)
                     canvas(height="325")
 
             each d, i in traffic
@@ -38,7 +38,7 @@ html
                     br
                     h3=d.domain
                     div.grid(data-storedvalues=d)
-                        div.col-4-12
+                        div.col-lg-4-12.col-sm-12-12.col-xs-12-12
                             form(id=d.domain + "-countries")
                                 h2
                                     i Country Hits
@@ -63,7 +63,7 @@ html
                                                         tr
                                                             th=country
                                                             th=hits
-                        div.col-4-12
+                        div.col-lg-4-12.col-sm-12-12.col-xs-12-12
                             form(id=d.domain + "-browsers")
                                 h2
                                     i Browsers
@@ -88,7 +88,7 @@ html
                                                         tr
                                                             th=browser
                                                             th=hits
-                        div.col-4-12
+                        div.col-lg-4-12.col-sm-12-12.col-xs-12-12
                             form(id=d.domain + "-os")
                                 h2
                                     i OS
@@ -113,7 +113,7 @@ html
                                                         tr
                                                             th=_os
                                                             th=hits
-                        div.col-4-12
+                        div.col-lg-4-12.col-sm-12-12.col-xs-12-12
                             form(id=d.domain + "-referrers")
                                 h2
                                     i Referrers
@@ -138,7 +138,7 @@ html
                                                         tr
                                                             th=referrer
                                                             th=hits
-                        div.col-4-12
+                        div.col-lg-4-12.col-sm-12-12.col-xs-12-12
                             form(id=d.domain + "-status")
                                 h2
                                     i Status
@@ -163,7 +163,7 @@ html
                                                         tr
                                                             th=status
                                                             th=hits
-                        div.col-4-12
+                        div.col-lg-4-12.col-sm-12-12.col-xs-12-12
                             form(id=d.domain + "-urls")
                                 h2
                                     i Url Hits
@@ -188,7 +188,7 @@ html
                                                         tr
                                                             th=u.url
                                                             th=u.count
-                        div.col-4-12
+                        div.col-lg-4-12.col-sm-12-12.col-xs-12-12
                             form(id=d.domain + "-urlAverageTime")
                                 h2
                                     i Url Average Response
