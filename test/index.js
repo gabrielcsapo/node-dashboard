@@ -3,6 +3,7 @@ var chance = require('chance')();
 var path = require('path');
 var fs = require('fs');
 var _ = require('underscore');
+var random_ua = require('random-ua');
 
 describe('node-dashboard', function() {
 
@@ -27,12 +28,13 @@ describe('node-dashboard', function() {
     var sub = ['vuence', 'sav', 'lefmacto'];
     var referrer = ['noruc.gm', 'imajupet.hn','milo.gt','wubi.vn','rekwo.nz'];
 
-    for(var i = 0; i < 50; i++) {
+    for(var i = 0; i < 75; i++) {
         it('should test if routes are bound', function(done) {
             request('http://localhost:1337')
                 .get('/distribute')
                 .set('Host', _.sample(sub) + '.example.com')
                 .set('x-forwarded-for', chance.ip())
+                .set('user-agent', random_ua.generate())
                 .set('referrer', _.sample(referrer))
                 .end(function(err) {
                     if (err) {

@@ -11,6 +11,8 @@ window.createGraphs = function(d) {
         createStatusGraph(d);
         createUrlGraph(d);
         createUrlAverageTime(d);
+        createBrowserGraph(d);
+        createOSGraph(d);
     }
 }
 
@@ -109,6 +111,58 @@ var createUrlGraph = function(d) {
             labels: labels,
             datasets: [{
                 label: "Url Hits",
+                data: data,
+                backgroundColor: color,
+                borderColor: color.replace(')', ',0.1)')
+            }]
+        },
+        options: {
+            maintainAspectRatio: false
+        }
+    });
+}
+
+var createBrowserGraph = function(d) {
+    var labels = [];
+    var data = [];
+    document.getElementById('label-graph-browsers-' + d.domain).checked = true;
+    Object.keys(d.browsers).forEach(function(s) {
+        labels.push(s);
+        data.push(d.browsers[s]);
+    });
+    var color = chance.color({format: 'rgb'});
+    new Chart(document.querySelector('#' + d.domain + '-browsers canvas'), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "Browsers",
+                data: data,
+                backgroundColor: color,
+                borderColor: color.replace(')', ',0.1)')
+            }]
+        },
+        options: {
+            maintainAspectRatio: false
+        }
+    });
+}
+
+var createOSGraph = function(d) {
+    var labels = [];
+    var data = [];
+    document.getElementById('label-graph-os-' + d.domain).checked = true;
+    Object.keys(d.os).forEach(function(s) {
+        labels.push(s);
+        data.push(d.os[s]);
+    });
+    var color = chance.color({format: 'rgb'});
+    new Chart(document.querySelector('#' + d.domain + '-os canvas'), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "OS",
                 data: data,
                 backgroundColor: color,
                 borderColor: color.replace(')', ',0.1)')

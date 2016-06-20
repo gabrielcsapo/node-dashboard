@@ -39,6 +39,8 @@ html
                     div.col-8-12
                         h3=d.domain
                         form(id=d.domain + "-countries")
+                            h2
+                                i Country Hits
                             div.nav-tab(style="height:525px;")
                                 ul
                                     li
@@ -50,7 +52,6 @@ html
                                         input(type="radio" name="nav-tab-label" id="label-table-countries-" + d.domain)
                                         label(for="label-table-countries-" + d.domain) Table
                                         div(style="background-color: transparent;")
-                                            h5 Country Hits
                                             table.table.responsive
                                                 thead
                                                   tr
@@ -62,7 +63,59 @@ html
                                                         th=country
                                                         th=hits
 
+                        form(id=d.domain + "-browsers")
+                            h2
+                                i Browsers
+                            div.nav-tab(style="height:525px;")
+                                ul
+                                    li
+                                        input(type="radio" name="nav-tab-label" id="label-graph-browsers-" + d.domain)
+                                        label(for="label-graph-browsers-" + d.domain) Graph
+                                        div(style="background-color: transparent;")
+                                            canvas
+                                    li
+                                        input(type="radio" name="nav-tab-label" id="label-table-browsers-" + d.domain)
+                                        label(for="label-table-browsers-" + d.domain) Table
+                                        div(style="background-color: transparent;")
+                                            table.table.responsive
+                                                thead
+                                                  tr
+                                                    th Browser
+                                                    th Hits
+                                                tbody
+                                                  each hits, browser in d.browsers
+                                                    tr
+                                                        th=browser
+                                                        th=hits
+
+                        form(id=d.domain + "-os")
+                            h2
+                                i OS
+                            div.nav-tab(style="height:525px;")
+                                ul
+                                    li
+                                        input(type="radio" name="nav-tab-label" id="label-graph-os-" + d.domain)
+                                        label(for="label-graph-os-" + d.domain) Graph
+                                        div(style="background-color: transparent;")
+                                            canvas
+                                    li
+                                        input(type="radio" name="nav-tab-label" id="label-table-os-" + d.domain)
+                                        label(for="label-table-os-" + d.domain) Table
+                                        div(style="background-color: transparent;")
+                                            table.table.responsive
+                                                thead
+                                                  tr
+                                                    th OS
+                                                    th Hits
+                                                tbody
+                                                  each hits, _os in d.os
+                                                    tr
+                                                        th=_os
+                                                        th=hits
+
                         form(id=d.domain + "-referrers")
+                            h2
+                                i Referrers
                             div.nav-tab(style="height:525px;")
                                 ul
                                     li
@@ -74,7 +127,6 @@ html
                                         input(type="radio" name="nav-tab-label" id="label-table-referrers-" + d.domain)
                                         label(for="label-table-referrers-" + d.domain) Table
                                         div(style="background-color: transparent;")
-                                            h5 Referrers
                                             table.table.responsive
                                                 thead
                                                   tr
@@ -86,6 +138,8 @@ html
                                                         th=referrer
                                                         th=hits
                         form(id=d.domain + "-status")
+                            h2
+                                i Status
                             div.nav-tab(style="height:525px;")
                                 ul
                                     li
@@ -97,7 +151,6 @@ html
                                         input(type="radio" name="nav-tab-label" id="label-table-status-" + d.domain)
                                         label(for="label-table-status-" + d.domain) Table
                                         div(style="background-color: transparent;")
-                                            h5 Status
                                             table.table.responsive
                                                 thead
                                                   tr
@@ -109,6 +162,8 @@ html
                                                         th=status
                                                         th=hits
                         form(id=d.domain + "-urls")
+                            h2
+                                i Url Hits
                             div.nav-tab(style="height:525px;")
                                 ul
                                     li
@@ -120,7 +175,6 @@ html
                                         input(type="radio" name="nav-tab-label" id="label-table-urls-" + d.domain)
                                         label(for="label-table-urls-" + d.domain) Table
                                         div(style="background-color: transparent;")
-                                            h5 Url Hits
                                             table.table.responsive
                                                 thead
                                                   tr
@@ -133,6 +187,8 @@ html
                                                         th=u.count
 
                         form(id=d.domain + "-urlAverageTime")
+                            h2
+                                i Url Average Response
                             div.nav-tab(style="height:525px;")
                                 ul
                                     li
@@ -144,7 +200,6 @@ html
                                         input(type="radio" name="nav-tab-label" id="label-table-urlAverageTime-" + d.domain)
                                         label(for="label-table-urlAverageTime-" + d.domain) Table
                                         div(style="background-color: transparent;")
-                                            h5 Url Average Response
                                             table.table.responsive
                                                 thead
                                                   tr
