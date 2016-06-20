@@ -16,7 +16,7 @@ html
 
             div.grid
                 div.col-lg-4-12.col-md-4-12.col-sm-12-12.col-xs-12-12
-                    div.panel.panel-black(style="margin:10px;")
+                    div.panel(style="margin:10px;border-radius:5px;")
                         div.panel-header
                             h2
                                 i System Info
@@ -31,14 +31,14 @@ html
                                     div.list-item-right
                                         div.badge.badge-white=info.memory
                 div.col-lg-4-12.col-md-4-12.col-sm-12-12.col-xs-12-12
-                    div.panel.panel-black(style="margin:10px;")
+                    div.panel(style="margin:10px;border-radius:5px;")
                         div.panel-header
                             h2
                                 i Memory Usage
                         div.panel-body(id="memory-graph" data-storedvalues=os.mem)
                             canvas(height="325")
                 div.col-lg-4-12.col-md-4-12.col-sm-12-12.col-xs-12-12
-                    div.panel.panel-black(style="margin:10px;")
+                    div.panel(style="margin:10px;border-radius:5px;")
                         div.panel-header
                             h2
                                 i CPU Usage
@@ -51,7 +51,7 @@ html
                     h3=d.domain
                     div.grid(data-storedvalues=d)
                         div.col-lg-4-12.col-sm-12-12.col-xs-12-12
-                            div.panel.panel-black(style="margin:10px;")
+                            div.panel(style="margin:10px;border-radius:5px;")
                                 div.panel-header
                                     h2
                                         i Country Hits
@@ -80,7 +80,7 @@ html
                                                                     th=hits
 
                         div.col-lg-4-12.col-sm-12-12.col-xs-12-12
-                            div.panel.panel-black(style="margin:10px;")
+                            div.panel(style="margin:10px;border-radius:5px;")
                                 div.panel-header
                                     h2
                                         i Browsers
@@ -108,7 +108,7 @@ html
                                                                     th=browser
                                                                     th=hits
                         div.col-lg-4-12.col-sm-12-12.col-xs-12-12
-                            div.panel.panel-black(style="margin:10px;")
+                            div.panel(style="margin:10px;border-radius:5px;")
                                 div.panel-header
                                     h2
                                         i OS
@@ -136,7 +136,7 @@ html
                                                                     th=_os
                                                                     th=hits
                         div.col-lg-4-12.col-sm-12-12.col-xs-12-12
-                            div.panel.panel-black(style="margin:10px;")
+                            div.panel(style="margin:10px;border-radius:5px;")
                                 div.panel-header
                                     h2
                                         i Referrers
@@ -164,7 +164,7 @@ html
                                                                     th=referrer
                                                                     th=hits
                         div.col-lg-4-12.col-sm-12-12.col-xs-12-12
-                            div.panel.panel-black(style="margin:10px;")
+                            div.panel(style="margin:10px;border-radius:5px;")
                                 div.panel-header
                                     h2
                                         i Status
@@ -192,7 +192,7 @@ html
                                                                     th=status
                                                                     th=hits
                         div.col-lg-4-12.col-sm-12-12.col-xs-12-12
-                            div.panel.panel-black(style="margin:10px;")
+                            div.panel(style="margin:10px;border-radius:5px;")
                                 div.panel-header
                                     h2
                                         i Url Hits
@@ -220,7 +220,7 @@ html
                                                                     th=u.url
                                                                     th=u.count
                         div.col-lg-4-12.col-sm-12-12.col-xs-12-12
-                            div.panel.panel-black(style="margin:10px;")
+                            div.panel(style="margin:10px;border-radius:5px;")
                                 div.panel-header
                                     h2
                                         i Url Average Response
