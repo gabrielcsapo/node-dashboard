@@ -7,6 +7,7 @@ var pug = require('pug');
 var _ = require('underscore');
 var os = require('os');
 var moment = require('moment');
+var filesize = require('filesize');
 var system = {
     cpu: [],
     mem: []
@@ -93,6 +94,21 @@ var parseUrlAverageTime = function(d) {
 }
 
 /**
+ex: return [ { url: '/admin/', size: '579.09', amount: 18 } ]
+**/
+var parseUrlResponseSize = function(d) {
+    return _.map(d, function(route) {
+        return {
+            url: route.url,
+            size: _.pluck(route.traffic, 'size').reduce(function(a, b) {
+                return parseInt(a) + parseInt(b)
+            }) / route.traffic.length,
+            amount: route.traffic.length
+        }
+    });
+}
+
+/**
 ex: returns { 'milo.gt': 4, 'noruc.gm': 2, 'rekwo.nz': 2, 'imajupet.hn': 1 }
 **/
 var parseReferrerList = function(d) {
@@ -150,6 +166,7 @@ var parseUrlTimeList = function(d) {
 
 var parse = function() {
     var data = [];
+    db.read();
     // This is parsing per hostname
     for (var key in db.object) {
         var d = db.object[key];
@@ -160,6 +177,7 @@ var parse = function() {
             urls: parseUrlList(d),
             urlAverageTime: parseUrlAverageTime(d),
             urlTimes: parseUrlTimeList(d),
+            urlResponseSize: parseUrlResponseSize(d),
             referrers: parseReferrerList(d),
             status: parseStatusList(d),
             browsers: parseBrowserList(d),
@@ -173,6 +191,7 @@ module.exports = function(req, res) {
     var html = pug.renderFile(path.resolve(__dirname, 'src', 'dashboard.pug'), {
         traffic: parse(),
         os: system,
+        filesize: filesize,
         info: {
             version: process.version,
             memory: (os.totalmem() / 1024 / 1024) + ' mb'

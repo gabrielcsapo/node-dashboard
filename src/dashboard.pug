@@ -254,6 +254,36 @@ html
                                                                 th=u.url
                                                                 th=u.time
 
+
+                    div.col-lg-4-12.col-sm-12-12.col-xs-12-12
+                        div.panel(style="margin:10px;border-radius:5px;")
+                            div.panel-header
+                                h2
+                                    i Url Response Size
+                            div.panel-body
+                                form(id=d.domain + "-urlResponseSize")
+                                    div.nav-tab(style="height:525px;")
+                                        ul
+                                            li
+                                                input(type="radio" name="nav-tab-label" id="label-graph-urlResponseSize-" + d.domain)
+                                                label(for="label-graph-urlResponseSize-" + d.domain) Graph
+                                                div(style="background-color: transparent;")
+                                                    canvas
+                                            li
+                                                input(type="radio" name="nav-tab-label" id="label-table-urlResponseSize-" + d.domain)
+                                                label(for="label-table-urlResponseSize-" + d.domain) Table
+                                                div(style="background-color: transparent;")
+                                                    table.table.responsive
+                                                        thead
+                                                          tr
+                                                            th Url
+                                                            th Size
+                                                        tbody
+                                                          each u in d.urlResponseSize
+                                                            tr
+                                                                th=u.url
+                                                                th=filesize(u.size)
+
                 br
                 hr.ellipsis
                 br
