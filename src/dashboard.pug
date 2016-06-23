@@ -3,6 +3,7 @@ html
     head
         title node-dashboard
         meta(name="viewport" content="width=device-width, initial-scale=1")
+        meta(http-equiv="refresh", content="100")
         style
             include ../node_modules/psychic-ui/dist/psychic-perisian-min.css
         script
@@ -52,6 +53,10 @@ html
                 br
                 h3.text-center=d.domain
                 div.grid(data-storedvalues=d)
+                    div.col-lg-12-12.col-sm-12-12.col-xs-12-12
+                        div(id=d.domain + "-traffic")
+                            canvas
+
                     div.col-lg-4-12.col-sm-12-12.col-xs-12-12
                         div.panel(style="margin:10px;border-radius:5px;")
                             div.panel-header

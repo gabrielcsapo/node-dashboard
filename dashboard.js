@@ -101,7 +101,7 @@ var parseUrlResponseSize = function(d) {
         return {
             url: route.url,
             size: _.pluck(route.traffic, 'size').reduce(function(a, b) {
-                return parseInt(a) + parseInt(b)
+                return parseInt(a || 0) + parseInt(b || 0)
             }) / route.traffic.length,
             amount: route.traffic.length
         }
