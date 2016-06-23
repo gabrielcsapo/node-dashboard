@@ -7,250 +7,257 @@ html
             include ../node_modules/psychic-ui/dist/psychic-perisian-min.css
         script
             include bundle.js
-
+        style.
+            .grid {
+                overflow: hidden;
+            }
     body
-        div(class="text-center" id="content" style="width:100%;")
-            div.navbar.navbar-black
-                div.container
-                    div.navbar-title node-dashboard
+        div.navbar.navbar-black
+            div.container
+                div.navbar-title node-dashboard
 
-            div.grid
-                div.col-lg-4-12.col-md-4-12.col-sm-12-12.col-xs-12-12
-                    div.panel(style="margin:10px;border-radius:5px;")
-                        div.panel-header
-                            h2
-                                i System Info
-                        div.panel-body(style="height:325px;")
-                            ul.list(style="padding:50px;")
-                                li.list-item.list-item-black
-                                    div.list-item-left Version
-                                    div.list-item-right
-                                        div.badge.badge-white=info.version
-                                li.list-item.list-item-black
-                                    div.list-item-left Memory
-                                    div.list-item-right
-                                        div.badge.badge-white=info.memory
-                div.col-lg-4-12.col-md-4-12.col-sm-12-12.col-xs-12-12
-                    div.panel(style="margin:10px;border-radius:5px;")
-                        div.panel-header
-                            h2
-                                i Memory Usage
-                        div.panel-body(id="memory-graph" data-storedvalues=os.mem)
-                            canvas(height="325")
-                div.col-lg-4-12.col-md-4-12.col-sm-12-12.col-xs-12-12
-                    div.panel(style="margin:10px;border-radius:5px;")
-                        div.panel-header
-                            h2
-                                i CPU Usage
-                        div.panel-body(id="cpu-graph" data-storedvalues=os.cpu)
-                            canvas(height="325")
+        div.grid
+            div.col-lg-4-12.col-md-4-12.col-sm-12-12.col-xs-12-12
+                div.panel(style="margin:10px;border-radius:5px;")
+                    div.panel-header
+                        h2
+                            i System Info
+                    div.panel-body(style="height:325px;")
+                        ul.list(style="padding:50px;")
+                            li.list-item.list-item-black
+                                div.list-item-left Version
+                                div.list-item-right
+                                    div.badge.badge-white=info.version
+                            li.list-item.list-item-black
+                                div.list-item-left Memory
+                                div.list-item-right
+                                    div.badge.badge-white=info.memory
+            div.col-lg-4-12.col-md-4-12.col-sm-12-12.col-xs-12-12
+                div.panel(style="margin:10px;border-radius:5px;")
+                    div.panel-header
+                        h2
+                            i Memory Usage
+                    div.panel-body(id="memory-graph" data-storedvalues=os.mem)
+                        canvas(height="325")
+            div.col-lg-4-12.col-md-4-12.col-sm-12-12.col-xs-12-12
+                div.panel(style="margin:10px;border-radius:5px;")
+                    div.panel-header
+                        h2
+                            i CPU Usage
+                    div.panel-body(id="cpu-graph" data-storedvalues=os.cpu)
+                        canvas(height="325")
 
-            each d, i in traffic
-                div
-                    br
-                    h3=d.domain
-                    div.grid(data-storedvalues=d)
-                        div.col-lg-4-12.col-sm-12-12.col-xs-12-12
-                            div.panel(style="margin:10px;border-radius:5px;")
-                                div.panel-header
-                                    h2
-                                        i Country Hits
-                                div.panel-body
-                                    form(id=d.domain + "-countries")
-                                        div.nav-tab(style="height:525px;")
-                                            ul
-                                                li
-                                                    input(type="radio" name="nav-tab-label" id="label-graph-countries-" + d.domain)
-                                                    label(for="label-graph-countries-" + d.domain) Graph
-                                                    div(style="background-color: transparent;")
-                                                        canvas
-                                                li
-                                                    input(type="radio" name="nav-tab-label" id="label-table-countries-" + d.domain)
-                                                    label(for="label-table-countries-" + d.domain) Table
-                                                    div(style="background-color: transparent;")
-                                                        table.table.responsive
-                                                            thead
-                                                              tr
-                                                                th Country
-                                                                th Hits
-                                                            tbody
-                                                              each hits, country in d.countries
-                                                                tr
-                                                                    th=country
-                                                                    th=hits
+        each d, i in traffic
+            div
+                br
+                h3.text-center=d.domain
+                div.grid(data-storedvalues=d)
+                    div.col-lg-4-12.col-sm-12-12.col-xs-12-12
+                        div.panel(style="margin:10px;border-radius:5px;")
+                            div.panel-header
+                                h2
+                                    i Country Hits
+                            div.panel-body
+                                form(id=d.domain + "-countries")
+                                    div.nav-tab(style="height:525px;")
+                                        ul
+                                            li
+                                                input(type="radio" name="nav-tab-label" id="label-graph-countries-" + d.domain)
+                                                label(for="label-graph-countries-" + d.domain) Graph
+                                                div(style="background-color: transparent;")
+                                                    canvas
+                                            li
+                                                input(type="radio" name="nav-tab-label" id="label-table-countries-" + d.domain)
+                                                label(for="label-table-countries-" + d.domain) Table
+                                                div(style="background-color: transparent;")
+                                                    table.table.responsive
+                                                        thead
+                                                          tr
+                                                            th Country
+                                                            th Hits
+                                                        tbody
+                                                          each hits, country in d.countries
+                                                            tr
+                                                                th=country
+                                                                th=hits
 
-                        div.col-lg-4-12.col-sm-12-12.col-xs-12-12
-                            div.panel(style="margin:10px;border-radius:5px;")
-                                div.panel-header
-                                    h2
-                                        i Browsers
-                                div.panel-body
-                                    form(id=d.domain + "-browsers")
-                                        div.nav-tab(style="height:525px;")
-                                            ul
-                                                li
-                                                    input(type="radio" name="nav-tab-label" id="label-graph-browsers-" + d.domain)
-                                                    label(for="label-graph-browsers-" + d.domain) Graph
-                                                    div(style="background-color: transparent;")
-                                                        canvas
-                                                li
-                                                    input(type="radio" name="nav-tab-label" id="label-table-browsers-" + d.domain)
-                                                    label(for="label-table-browsers-" + d.domain) Table
-                                                    div(style="background-color: transparent;")
-                                                        table.table.responsive
-                                                            thead
-                                                              tr
-                                                                th Browser
-                                                                th Hits
-                                                            tbody
-                                                              each hits, browser in d.browsers
-                                                                tr
-                                                                    th=browser
-                                                                    th=hits
-                        div.col-lg-4-12.col-sm-12-12.col-xs-12-12
-                            div.panel(style="margin:10px;border-radius:5px;")
-                                div.panel-header
-                                    h2
-                                        i OS
-                                div.panel-body
-                                    form(id=d.domain + "-os")
-                                        div.nav-tab(style="height:525px;")
-                                            ul
-                                                li
-                                                    input(type="radio" name="nav-tab-label" id="label-graph-os-" + d.domain)
-                                                    label(for="label-graph-os-" + d.domain) Graph
-                                                    div(style="background-color: transparent;")
-                                                        canvas
-                                                li
-                                                    input(type="radio" name="nav-tab-label" id="label-table-os-" + d.domain)
-                                                    label(for="label-table-os-" + d.domain) Table
-                                                    div(style="background-color: transparent;")
-                                                        table.table.responsive
-                                                            thead
-                                                              tr
-                                                                th OS
-                                                                th Hits
-                                                            tbody
-                                                              each hits, _os in d.os
-                                                                tr
-                                                                    th=_os
-                                                                    th=hits
-                        div.col-lg-4-12.col-sm-12-12.col-xs-12-12
-                            div.panel(style="margin:10px;border-radius:5px;")
-                                div.panel-header
-                                    h2
-                                        i Referrers
-                                div.panel-body
-                                    form(id=d.domain + "-referrers")
-                                        div.nav-tab(style="height:525px;")
-                                            ul
-                                                li
-                                                    input(type="radio" name="nav-tab-label" id="label-graph-referrers-" + d.domain)
-                                                    label(for="label-graph-referrers-" + d.domain) Graph
-                                                    div(style="background-color: transparent;")
-                                                        canvas
-                                                li
-                                                    input(type="radio" name="nav-tab-label" id="label-table-referrers-" + d.domain)
-                                                    label(for="label-table-referrers-" + d.domain) Table
-                                                    div(style="background-color: transparent;")
-                                                        table.table.responsive
-                                                            thead
-                                                              tr
-                                                                th Referrer
-                                                                th Hits
-                                                            tbody
-                                                              each hits, referrer in d.referrers
-                                                                tr
-                                                                    th=referrer
-                                                                    th=hits
-                        div.col-lg-4-12.col-sm-12-12.col-xs-12-12
-                            div.panel(style="margin:10px;border-radius:5px;")
-                                div.panel-header
-                                    h2
-                                        i Status
-                                div.panel-body
-                                    form(id=d.domain + "-status")
-                                        div.nav-tab(style="height:525px;")
-                                            ul
-                                                li
-                                                    input(type="radio" name="nav-tab-label" id="label-graph-status-" + d.domain)
-                                                    label(for="label-graph-status-" + d.domain) Graph
-                                                    div(style="background-color: transparent;")
-                                                        canvas
-                                                li
-                                                    input(type="radio" name="nav-tab-label" id="label-table-status-" + d.domain)
-                                                    label(for="label-table-status-" + d.domain) Table
-                                                    div(style="background-color: transparent;")
-                                                        table.table.responsive
-                                                            thead
-                                                              tr
-                                                                th Status
-                                                                th Hits
-                                                            tbody
-                                                              each hits, status in d.status
-                                                                tr
-                                                                    th=status
-                                                                    th=hits
-                        div.col-lg-4-12.col-sm-12-12.col-xs-12-12
-                            div.panel(style="margin:10px;border-radius:5px;")
-                                div.panel-header
-                                    h2
-                                        i Url Hits
-                                div.panel-body
-                                    form(id=d.domain + "-urls")
-                                        div.nav-tab(style="height:525px;")
-                                            ul
-                                                li
-                                                    input(type="radio" name="nav-tab-label" id="label-graph-urls-" + d.domain)
-                                                    label(for="label-graph-urls-" + d.domain) Graph
-                                                    div(style="background-color: transparent;")
-                                                        canvas
-                                                li
-                                                    input(type="radio" name="nav-tab-label" id="label-table-urls-" + d.domain)
-                                                    label(for="label-table-urls-" + d.domain) Table
-                                                    div(style="background-color: transparent;")
-                                                        table.table.responsive
-                                                            thead
-                                                              tr
-                                                                th Url
-                                                                th Hits
-                                                            tbody
-                                                              each u in d.urls
-                                                                tr
-                                                                    th=u.url
-                                                                    th=u.count
-                        div.col-lg-4-12.col-sm-12-12.col-xs-12-12
-                            div.panel(style="margin:10px;border-radius:5px;")
-                                div.panel-header
-                                    h2
-                                        i Url Average Response
-                                div.panel-body
-                                    form(id=d.domain + "-urlAverageTime")
-                                        div.nav-tab(style="height:525px;")
-                                            ul
-                                                li
-                                                    input(type="radio" name="nav-tab-label" id="label-graph-urlAverageTime-" + d.domain)
-                                                    label(for="label-graph-urlAverageTime-" + d.domain) Graph
-                                                    div(style="background-color: transparent;")
-                                                        canvas
-                                                li
-                                                    input(type="radio" name="nav-tab-label" id="label-table-urlAverageTime-" + d.domain)
-                                                    label(for="label-table-urlAverageTime-" + d.domain) Table
-                                                    div(style="background-color: transparent;")
-                                                        table.table.responsive
-                                                            thead
-                                                              tr
-                                                                th Url
-                                                                th Average Time
-                                                            tbody
-                                                              each u in d.urlAverageTime
-                                                                tr
-                                                                    th=u.url
-                                                                    th=u.time
-                    br
-                    hr.ellipsis
-                    br
-                    br
+                    div.col-lg-4-12.col-sm-12-12.col-xs-12-12
+                        div.panel(style="margin:10px;border-radius:5px;")
+                            div.panel-header
+                                h2
+                                    i Browsers
+                            div.panel-body
+                                form(id=d.domain + "-browsers")
+                                    div.nav-tab(style="height:525px;")
+                                        ul
+                                            li
+                                                input(type="radio" name="nav-tab-label" id="label-graph-browsers-" + d.domain)
+                                                label(for="label-graph-browsers-" + d.domain) Graph
+                                                div(style="background-color: transparent;")
+                                                    canvas
+                                            li
+                                                input(type="radio" name="nav-tab-label" id="label-table-browsers-" + d.domain)
+                                                label(for="label-table-browsers-" + d.domain) Table
+                                                div(style="background-color: transparent;")
+                                                    table.table.responsive
+                                                        thead
+                                                          tr
+                                                            th Browser
+                                                            th Hits
+                                                        tbody
+                                                          each hits, browser in d.browsers
+                                                            tr
+                                                                th=browser
+                                                                th=hits
+                    div.col-lg-4-12.col-sm-12-12.col-xs-12-12
+                        div.panel(style="margin:10px;border-radius:5px;")
+                            div.panel-header
+                                h2
+                                    i OS
+                            div.panel-body
+                                form(id=d.domain + "-os")
+                                    div.nav-tab(style="height:525px;")
+                                        ul
+                                            li
+                                                input(type="radio" name="nav-tab-label" id="label-graph-os-" + d.domain)
+                                                label(for="label-graph-os-" + d.domain) Graph
+                                                div(style="background-color: transparent;")
+                                                    canvas
+                                            li
+                                                input(type="radio" name="nav-tab-label" id="label-table-os-" + d.domain)
+                                                label(for="label-table-os-" + d.domain) Table
+                                                div(style="background-color: transparent;")
+                                                    table.table.responsive
+                                                        thead
+                                                          tr
+                                                            th OS
+                                                            th Hits
+                                                        tbody
+                                                          each hits, _os in d.os
+                                                            tr
+                                                                th=_os
+                                                                th=hits
+
+                    div.col-lg-4-12.col-sm-12-12.col-xs-12-12
+                        div.panel(style="margin:10px;border-radius:5px;")
+                            div.panel-header
+                                h2
+                                    i Referrers
+                            div.panel-body
+                                form(id=d.domain + "-referrers")
+                                    div.nav-tab(style="height:525px;")
+                                        ul
+                                            li
+                                                input(type="radio" name="nav-tab-label" id="label-graph-referrers-" + d.domain)
+                                                label(for="label-graph-referrers-" + d.domain) Graph
+                                                div(style="background-color: transparent;")
+                                                    canvas
+                                            li
+                                                input(type="radio" name="nav-tab-label" id="label-table-referrers-" + d.domain)
+                                                label(for="label-table-referrers-" + d.domain) Table
+                                                div(style="background-color: transparent;")
+                                                    table.table.responsive
+                                                        thead
+                                                          tr
+                                                            th Referrer
+                                                            th Hits
+                                                        tbody
+                                                          each hits, referrer in d.referrers
+                                                            tr
+                                                                th=referrer
+                                                                th=hits
+
+                    div.col-lg-4-12.col-sm-12-12.col-xs-12-12
+                        div.panel(style="margin:10px;border-radius:5px;")
+                            div.panel-header
+                                h2
+                                    i Status
+                            div.panel-body
+                                form(id=d.domain + "-status")
+                                    div.nav-tab(style="height:525px;")
+                                        ul
+                                            li
+                                                input(type="radio" name="nav-tab-label" id="label-graph-status-" + d.domain)
+                                                label(for="label-graph-status-" + d.domain) Graph
+                                                div(style="background-color: transparent;")
+                                                    canvas
+                                            li
+                                                input(type="radio" name="nav-tab-label" id="label-table-status-" + d.domain)
+                                                label(for="label-table-status-" + d.domain) Table
+                                                div(style="background-color: transparent;")
+                                                    table.table.responsive
+                                                        thead
+                                                          tr
+                                                            th Status
+                                                            th Hits
+                                                        tbody
+                                                          each hits, status in d.status
+                                                            tr
+                                                                th=status
+                                                                th=hits
+
+                    div.col-lg-4-12.col-sm-12-12.col-xs-12-12
+                        div.panel(style="margin:10px;border-radius:5px;")
+                            div.panel-header
+                                h2
+                                    i Url Hits
+                            div.panel-body
+                                form(id=d.domain + "-urls")
+                                    div.nav-tab(style="height:525px;")
+                                        ul
+                                            li
+                                                input(type="radio" name="nav-tab-label" id="label-graph-urls-" + d.domain)
+                                                label(for="label-graph-urls-" + d.domain) Graph
+                                                div(style="background-color: transparent;")
+                                                    canvas
+                                            li
+                                                input(type="radio" name="nav-tab-label" id="label-table-urls-" + d.domain)
+                                                label(for="label-table-urls-" + d.domain) Table
+                                                div(style="background-color: transparent;")
+                                                    table.table.responsive
+                                                        thead
+                                                          tr
+                                                            th Url
+                                                            th Hits
+                                                        tbody
+                                                          each u in d.urls
+                                                            tr
+                                                                th=u.url
+                                                                th=u.count
+
+                    div.col-lg-4-12.col-sm-12-12.col-xs-12-12
+                        div.panel(style="margin:10px;border-radius:5px;")
+                            div.panel-header
+                                h2
+                                    i Url Average Response
+                            div.panel-body
+                                form(id=d.domain + "-urlAverageTime")
+                                    div.nav-tab(style="height:525px;")
+                                        ul
+                                            li
+                                                input(type="radio" name="nav-tab-label" id="label-graph-urlAverageTime-" + d.domain)
+                                                label(for="label-graph-urlAverageTime-" + d.domain) Graph
+                                                div(style="background-color: transparent;")
+                                                    canvas
+                                            li
+                                                input(type="radio" name="nav-tab-label" id="label-table-urlAverageTime-" + d.domain)
+                                                label(for="label-table-urlAverageTime-" + d.domain) Table
+                                                div(style="background-color: transparent;")
+                                                    table.table.responsive
+                                                        thead
+                                                          tr
+                                                            th Url
+                                                            th Average Time
+                                                        tbody
+                                                          each u in d.urlAverageTime
+                                                            tr
+                                                                th=u.url
+                                                                th=u.time
+
+                br
+                hr.ellipsis
+                br
+                br
         script.
             document.addEventListener("DOMContentLoaded", function(event) {
                 window.createOSGraphs();
