@@ -53,6 +53,23 @@ window.createOSGraphs = function() {
             'line'
         );
     }());
+
+    (function() {
+        var labels = [];
+        var data = [];
+        var d = JSON.parse(document.getElementById('heap-graph').dataset['storedvalues']);
+        d.forEach(function(s) {
+            data.push(s[1]);
+            labels.push(moment(s[0]).format('HH:mm:ss'));
+        });
+        createGraph(
+            document.querySelector('#heap-graph canvas'),
+            labels,
+            data,
+            'Heap Usage',
+            'line'
+        );
+    }());
 }
 
 var createGraph = function(ctx, labels, data, label, type) {

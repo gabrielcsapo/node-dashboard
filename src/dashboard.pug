@@ -18,7 +18,7 @@ html
                 div.navbar-title node-dashboard
 
         div.grid
-            div.col-lg-4-12.col-md-4-12.col-sm-12-12.col-xs-12-12
+            div.col-lg-3-12.col-md-4-12.col-sm-12-12.col-xs-12-12
                 div.panel(style="margin:10px;border-radius:5px;")
                     div.panel-header
                         h2
@@ -33,19 +33,26 @@ html
                                 div.list-item-left Memory
                                 div.list-item-right
                                     div.badge.badge-white=info.memory
-            div.col-lg-4-12.col-md-4-12.col-sm-12-12.col-xs-12-12
+            div.col-lg-3-12.col-md-4-12.col-sm-12-12.col-xs-12-12
                 div.panel(style="margin:10px;border-radius:5px;")
                     div.panel-header
                         h2
                             i Memory Usage
                     div.panel-body(id="memory-graph" data-storedvalues=os.mem)
                         canvas(height="325")
-            div.col-lg-4-12.col-md-4-12.col-sm-12-12.col-xs-12-12
+            div.col-lg-3-12.col-md-4-12.col-sm-12-12.col-xs-12-12
                 div.panel(style="margin:10px;border-radius:5px;")
                     div.panel-header
                         h2
                             i CPU Usage
                     div.panel-body(id="cpu-graph" data-storedvalues=os.cpu)
+                        canvas(height="325")
+            div.col-lg-3-12.col-md-4-12.col-sm-12-12.col-xs-12-12
+                div.panel(style="margin:10px;border-radius:5px;")
+                    div.panel-header
+                        h2
+                            i Heap Usage
+                    div.panel-body(id="heap-graph" data-storedvalues=os.heap)
                         canvas(height="325")
 
         each d, i in traffic
