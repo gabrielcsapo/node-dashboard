@@ -10,15 +10,18 @@ var moment = require('moment');
 var filesize = require('filesize');
 var system = {
     cpu: [],
-    mem: []
+    mem: [],
+    heap: []
 };
 
 setInterval(function() {
     system.cpu.push([moment().format(), os.loadavg()[0]]);
     system.mem.push([moment().format(), (process.memoryUsage().rss / 1024 / 1024)]);
+    system.heap.push([moment().format(), process.memoryUsage().heapUsed / 1024 / 1024]);
     if(system.mem.length > 30) {
         system.mem.pop();
         system.cpu.pop();
+        system.heap.pop();
     }
 }, 10000);
 
