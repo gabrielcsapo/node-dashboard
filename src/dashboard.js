@@ -210,7 +210,6 @@ var createCountryGraph = function(d) {
 }
 
 var createTrafficGraph = function(d) {
-    var labels = [];
     var data = [];
     d.urlTimes.forEach(function(c) {
         data.push({
