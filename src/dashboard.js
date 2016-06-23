@@ -2,6 +2,7 @@
 var Chart = require('chart.js');
 var moment = require('moment');
 var chance = require('chance')();
+var _ = require('underscore');
 
 window.createGraphs = function(d) {
     if(d) {
@@ -9,6 +10,7 @@ window.createGraphs = function(d) {
         createCountryGraph(d);
         createReferrersGraph(d);
         createStatusGraph(d);
+        createTrafficGraph(d);
         createUrlGraph(d);
         createUrlAverageTime(d);
         createBrowserGraph(d);
@@ -205,4 +207,35 @@ var createCountryGraph = function(d) {
         data,
         'Countries'
     );
+}
+
+var createTrafficGraph = function(d) {
+    var labels = [];
+    var data = [];
+    d.urlTimes.forEach(function(c) {
+        data.push({
+            label: c.url,
+            backgroundColor: 'rgba(255, 255, 255, 0)',
+            borderColor: chance.color({format: 'rgb'}),
+            data: _.map(c.time, function(t) {
+                return { y: t.time, x: t.date }
+            })
+        });
+    });
+    new Chart(document.querySelector('#' + d.domain + '-traffic canvas'), {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: data
+        },
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                xAxes: [{
+                    type: 'linear',
+                    position: 'bottom'
+                }]
+            }
+        }
+    });
 }

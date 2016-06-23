@@ -15,14 +15,8 @@ describe('node-dashboard', function() {
     });
 
     it('should spawn node-dashboard', function(done) {
-        var app = require('express')();
-        var analytics = require('../index');
-
-        app.use(analytics);
-
-        app.listen('1337', function() {
-            done();
-        });
+        require('../example/index');
+        done();
     });
 
     var sub = ['vuence', 'sav', 'lefmacto'];
@@ -30,8 +24,9 @@ describe('node-dashboard', function() {
 
     for(var i = 0; i < 75; i++) {
         it('should test if routes are bound', function(done) {
+            this.timeout(50000);
             request('http://localhost:1337')
-                .get('/distribute')
+                .get('/')
                 .set('Host', _.sample(sub) + '.example.com')
                 .set('x-forwarded-for', chance.ip())
                 .set('user-agent', random_ua.generate())
@@ -40,7 +35,29 @@ describe('node-dashboard', function() {
                     if (err) {
                         throw err;
                     }
-                    done();
+                    request('http://localhost:1337')
+                        .get('/hello')
+                        .set('Host', _.sample(sub) + '.example.com')
+                        .set('x-forwarded-for', chance.ip())
+                        .set('user-agent', random_ua.generate())
+                        .set('referrer', _.sample(referrer))
+                        .end(function(err) {
+                            if (err) {
+                                throw err;
+                            }
+                            request('http://localhost:1337')
+                                .get('/world')
+                                .set('Host', _.sample(sub) + '.example.com')
+                                .set('x-forwarded-for', chance.ip())
+                                .set('user-agent', random_ua.generate())
+                                .set('referrer', _.sample(referrer))
+                                .end(function(err) {
+                                    if (err) {
+                                        throw err;
+                                    }
+                                    done();
+                                });
+                        });
                 });
         });
     }
