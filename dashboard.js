@@ -197,7 +197,8 @@ module.exports = function(req, res) {
         filesize: filesize,
         info: {
             version: process.version,
-            memory: (os.totalmem() / 1024 / 1024) + ' mb'
+            memory: filesize(os.totalmem()),
+            heap: filesize(process.memoryUsage().heapTotal)
         }
     });
     res.send(html);
