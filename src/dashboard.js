@@ -13,6 +13,7 @@ window.createGraphs = function(d) {
         createUrlAverageTime(d);
         createBrowserGraph(d);
         createOSGraph(d);
+        urlResponseSizeGraph(d);
     }
 }
 
@@ -171,6 +172,22 @@ var createReferrersGraph = function(d) {
         labels,
         data,
         'Refferers'
+    );
+}
+
+var urlResponseSizeGraph = function(d) {
+    var labels = [];
+    var data = [];
+    document.getElementById('label-graph-urlResponseSize-' + d.domain).checked = true;
+    Object.keys(d.urlResponseSize).forEach(function(u) {
+        labels.push(d.urlResponseSize[u].url);
+        data.push(d.urlResponseSize[u].size);
+    });
+    createGraph(
+        document.querySelector('#' + d.domain + '-urlResponseSize canvas'),
+        labels,
+        data,
+        'Url Response Size'
     );
 }
 

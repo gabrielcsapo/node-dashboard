@@ -36,7 +36,8 @@ module.exports = responseTime(function(req, res, time) {
             time: time,
             geo: geo,
             referrer: referrer,
-            ua: ua
+            ua: ua,
+            size: res._headers['content-length']
         })
     } else {
         db(hostname).push({
@@ -49,7 +50,8 @@ module.exports = responseTime(function(req, res, time) {
                 time: time,
                 geo: geo,
                 referrer: referrer,
-                ua: ua
+                ua: ua,
+                size: res._headers['content-length']
             }]
         });
     }
