@@ -1,6 +1,6 @@
 {
   "name": "node-dashboard",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "description": "plugin for express apps to generate a dashboard for all routes and traffic",
   "main": "index.js",
   "scripts": {
