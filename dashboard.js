@@ -83,6 +83,27 @@ var parseUrlList = function(d) {
 }
 
 /**
+ex: returns [{ url: '/', methods: { GET: 24 } }]
+**/
+var parseUrlMethodList = function(d) {
+    return _.map(d, function(route) {
+        return {
+            url: route.url,
+            methods: _.map(route.traffic, function(traffic) {
+                return traffic.method
+            }).reduce(function(acc, curr) {
+                if (typeof acc[curr] == 'undefined') {
+                    acc[curr] = 1;
+                } else {
+                    acc[curr] += 1;
+                }
+                return acc;
+            }, {})
+        }
+    });
+}
+
+/**
 ex: return [ { url: '/distribute', time: 0.21992199999999998 } ]
 **/
 var parseUrlAverageTime = function(d) {
@@ -181,6 +202,7 @@ var parse = function() {
             urlAverageTime: parseUrlAverageTime(d),
             urlTimes: parseUrlTimeList(d),
             urlResponseSize: parseUrlResponseSize(d),
+            urlMethods: parseUrlMethodList(d),
             referrers: parseReferrerList(d),
             status: parseStatusList(d),
             browsers: parseBrowserList(d),

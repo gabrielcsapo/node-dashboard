@@ -23,7 +23,7 @@ app.get('/world', function(req, res) {
 app.use('/admin', dashboard);
 
 app.listen('1337', function() {
-    console.log('node-dashboard listening on http://localhost:1337'); // eslint-disable-line no-console
+    console.log('node-dashboard-example listening on http://localhost:1337'); // eslint-disable-line no-console
 });
 
 module.exports = app;

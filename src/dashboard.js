@@ -16,6 +16,7 @@ window.createGraphs = function(d) {
         createBrowserGraph(d);
         createOSGraph(d);
         urlResponseSizeGraph(d);
+        createMethodGraph(d);
     }
 }
 
@@ -250,6 +251,42 @@ var createTrafficGraph = function(d) {
                 xAxes: [{
                     type: 'linear',
                     position: 'bottom'
+                }]
+            }
+        }
+    });
+}
+
+var createMethodGraph = function(d) {
+    var labels = [];
+    var data = [];
+    var color = chance.color({format: 'rgb'});
+    d.urlMethods.forEach(function(c) {
+        var url = c.url;
+        for(var key in c.methods) {
+            labels.push(url + '-' + key);
+            data.push(c.methods[key]);
+        }
+    });
+    document.getElementById('label-graph-urlMethods-' + d.domain).checked = true;
+    new Chart(document.querySelector('#' + d.domain + '-urlMethods canvas'), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Url Methods',
+                data: data,
+                backgroundColor: color,
+                borderColor: color.replace(')', ',0.1)')
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
                 }]
             }
         }
