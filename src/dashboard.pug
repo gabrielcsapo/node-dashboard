@@ -19,7 +19,7 @@ html
             }
             .nav > a {
                 display: block;
-                padding-bottom: 15px;
+                padding-bottom: 20px;
             }
             .nav > a:hover, .nav > a:hover .icon {
                 border: 0;
@@ -28,7 +28,7 @@ html
     body
         div.navbar.navbar-black
             div.container
-                div.navbar-title(style="margin-top:25px;") node-dashboard
+                div.navbar-title(style="margin-top:30px;") node-dashboard
                 div.nav
                     a(href="https://github.com/gabrielcsapo/node-dashboard")
                         svg(height="32" class="icon" viewBox="0 0 16 16" version="1.1" width="64" aria-hidden="true")
@@ -316,6 +316,38 @@ html
                                                             tr
                                                                 th=u.url
                                                                 th=filesize(u.size)
+
+                    div.col-lg-4-12.col-sm-12-12.col-xs-12-12
+                        div.panel(style="margin:10px;border-radius:5px;")
+                            div.panel-header
+                                h2
+                                    i Url Methods
+                            div.panel-body
+                                form(id=d.domain + "-urlMethods")
+                                    div.nav-tab(style="height:525px;")
+                                        ul
+                                            li
+                                                input(type="radio" name="nav-tab-label" id="label-graph-urlMethods-" + d.domain)
+                                                label(for="label-graph-urlMethods-" + d.domain) Graph
+                                                div(style="background-color: transparent;")
+                                                    canvas
+                                            li
+                                                input(type="radio" name="nav-tab-label" id="label-table-urlMethods-" + d.domain)
+                                                label(for="label-table-urlMethods-" + d.domain) Table
+                                                div(style="background-color: transparent;")
+                                                    table.table.responsive
+                                                        thead
+                                                          tr
+                                                            th Url
+                                                            th Method
+                                                            th Hits
+                                                        tbody
+                                                            each group in d.urlMethods
+                                                              each hits, method in group.methods
+                                                                  tr
+                                                                      th=group.url
+                                                                      th=method
+                                                                      th=hits
 
                 br
                 hr.ellipsis

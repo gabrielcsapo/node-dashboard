@@ -1,20 +1,7 @@
 module.exports = function(grunt) {
-    grunt.loadNpmTasks('grunt-contrib-pug');
     grunt.loadNpmTasks('grunt-screenshot');
 
     grunt.initConfig({
-        pug: {
-            compile: {
-                options: {
-                    data: {
-                        debug: false
-                    }
-                },
-                files: {
-                    'dist/dashboard.html': ['./src/dashboard.pug']
-                }
-            }
-        },
         screenshot: {
             dashboard: {
               options: {
@@ -35,5 +22,5 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('default', ['pug']);
+    grunt.registerTask('default', ['screenshot']);
 }
