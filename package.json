@@ -36,7 +36,7 @@
     "express": "^4.14.0",
     "grunt": "^1.0.1",
     "grunt-screenshot": "^0.6.0",
-    "mocha": "^2.5.3",
+    "mocha": "^3.0.1",
     "random-ua": "0.0.6",
     "supertest": "^2.0.0",
     "uglify-js": "^2.6.4"
