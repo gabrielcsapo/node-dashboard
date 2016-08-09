@@ -1,6 +1,6 @@
 {
   "name": "node-dashboard",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "description": "plugin for express apps to generate a dashboard for all routes and traffic",
   "main": "index.js",
   "scripts": {
@@ -20,7 +20,7 @@
   "dependencies": {
     "filesize": "^3.3.0",
     "geoip-lite": "^1.1.8",
-    "moment": "^2.13.0",
+    "moment": "^2.14.1",
     "node-flat-db": "^0.2.1",
     "psychic-ui": "^0.4.0",
     "pug": "^2.0.0-beta3",
@@ -29,16 +29,16 @@
     "underscore": "^1.8.3"
   },
   "devDependencies": {
-    "browserify": "^13.0.1",
-    "chance": "^1.0.3",
-    "chart.js": "^2.1.6",
-    "eslint": "^2.13.1",
+    "browserify": "^13.1.0",
+    "chance": "^1.0.4",
+    "chart.js": "^2.2.1",
+    "eslint": "^3.2.2",
     "express": "^4.14.0",
     "grunt": "^1.0.1",
-    "grunt-screenshot": "^0.4.0",
-    "mocha": "^2.5.3",
+    "grunt-screenshot": "^0.6.0",
+    "mocha": "^3.0.2",
     "random-ua": "0.0.6",
-    "supertest": "^1.2.0",
-    "uglify-js": "^2.6.4"
+    "supertest": "^2.0.0",
+    "uglify-js": "^2.7.0"
   }
 }

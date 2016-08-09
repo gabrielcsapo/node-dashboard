@@ -3,6 +3,7 @@ var db = flat('dashboard.json', {
     storage: require('node-flat-db/file-sync')
 });
 var path = require('path');
+var fs = require('fs');
 var pug = require('pug');
 var _ = require('underscore');
 var os = require('os');
@@ -214,6 +215,7 @@ var parse = function() {
 
 module.exports = function(req, res) {
     var html = pug.renderFile(path.resolve(__dirname, 'src', 'dashboard.pug'), {
+        style: fs.readFileSync(path.resolve('node_modules', 'psychic-ui', 'dist', 'psychic-perisian.css')),
         traffic: parse(),
         os: system,
         filesize: filesize,
