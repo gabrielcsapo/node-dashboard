@@ -1,11 +1,16 @@
 .grid {
     overflow: hidden;
 }
-.col-4-12 {
-    width: 31.3333333333% !important;
+@media screen and (min-width:48em){
+    .col-md-4-12 {
+        width: 32.33333% !important;
+    }
+}
+.column {
     height: 400px;
     overflow: scroll;
     margin: .5% !important;
+    border-radius: 3px;
     border: 1px solid rgb(199, 199, 199);
 }
 .icon {

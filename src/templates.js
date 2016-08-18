@@ -1,6 +1,6 @@
 this["JST"] = this["JST"] || {};
 
-this["JST"]["src/templates/column.html"] = function(obj) {obj || (obj = {});var __t, __p = '', __e = _.escape;with (obj) {__p += '<div class="col-4-12">\n    ' +((__t = ( component )) == null ? '' : __t) +'\n</div>\n';}return __p};
+this["JST"]["src/templates/column.html"] = function(obj) {obj || (obj = {});var __t, __p = '', __e = _.escape;with (obj) {__p += '<div class="column col-md-4-12 col-sm-12-12 col-xs-12-12">\n    ' +((__t = ( component )) == null ? '' : __t) +'\n</div>\n';}return __p};
 
 this["JST"]["src/templates/grid.html"] = function(obj) {obj || (obj = {});var __t, __p = '', __e = _.escape;with (obj) {__p += '<div class="grid">\n    ' +((__t = ( html )) == null ? '' : __t) +'\n</div>\n';}return __p};
 

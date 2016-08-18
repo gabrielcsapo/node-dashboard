@@ -19,7 +19,7 @@ describe('node-dashboard', function() {
         done();
     });
 
-    var sub = ['vuence', 'sav', 'lefmacto'];
+    var sub = ['', 'sav.'];
     var referrer = ['noruc.gm', 'imajupet.hn','milo.gt','wubi.vn','rekwo.nz'];
 
     for(var i = 0; i < 75; i++) {
@@ -27,7 +27,7 @@ describe('node-dashboard', function() {
             this.timeout(50000);
             request('http://localhost:1337')
                 .get('/')
-                .set('Host', _.sample(sub) + '.example.com')
+                .set('Host', _.sample(sub) + 'example.com')
                 .set('x-forwarded-for', chance.ip())
                 .set('user-agent', random_ua.generate())
                 .set('referrer', _.sample(referrer))
