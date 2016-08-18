@@ -1,0 +1,23 @@
+.grid {
+    overflow: hidden;
+}
+.col-4-12 {
+    width: 31.3333333333% !important;
+    height: 400px;
+    overflow: scroll;
+    margin: .5% !important;
+    border: 1px solid rgb(199, 199, 199);
+}
+.icon {
+    display: block;
+    color: white;
+    fill: currentColor
+}
+.nav > a {
+    display: block;
+    padding-bottom: 20px;
+}
+.nav > a:hover, .nav > a:hover .icon {
+    border: 0;
+    color: rgb(177, 177, 177);
+}

@@ -2,6 +2,8 @@ var flat = require('node-flat-db');
 var db = flat('dashboard.json', {
     storage: require('node-flat-db/file-sync')
 });
+var express = require('express');
+var router = express.Router();
 var path = require('path');
 var fs = require('fs');
 var pug = require('pug');
@@ -9,6 +11,7 @@ var _ = require('underscore');
 var os = require('os');
 var moment = require('moment');
 var filesize = require('filesize');
+
 var system = {
     cpu: [],
     mem: [],
@@ -72,15 +75,19 @@ var parseCountryList = function(d) {
 }
 
 /**
-ex: returns [ { url: '/distribute', count: 11 } ]
+ex: returns { '/distribute': 11 }
 **/
 var parseUrlList = function(d) {
-    return _.map(d, function(route) {
-        return {
-            url: route.url,
-            count: route.traffic.length
+    return _.flatten(_.map(d, function(route) {
+        return route.url;
+    })).reduce(function(acc, curr) {
+        if (typeof acc[curr] == 'undefined') {
+            acc[curr] = 1;
+        } else {
+            acc[curr] += 1;
         }
-    });
+        return acc;
+    }, {});
 }
 
 /**
@@ -105,17 +112,16 @@ var parseUrlMethodList = function(d) {
 }
 
 /**
-ex: return [ { url: '/distribute', time: 0.21992199999999998 } ]
+ex: return { '/distribute': 0.21992199999999998 }
 **/
 var parseUrlAverageTime = function(d) {
-    return _.map(d, function(route) {
-        return {
-            url: route.url,
-            time: _.pluck(route.traffic, 'time').reduce(function(a, b) {
-                return a + b
-            })
-        }
+    var temp = {};
+    d.forEach(function(route) {
+        temp[route.url] = _.pluck(route.traffic, 'time').reduce(function(a, b) {
+            return a + b
+        })
     });
+    return temp;
 }
 
 /**
@@ -197,11 +203,9 @@ var parse = function() {
         var d = db.object[key];
         data.push({
             domain: key,
-            data: d,
             countries: parseCountryList(d),
             urls: parseUrlList(d),
             urlAverageTime: parseUrlAverageTime(d),
-            urlTimes: parseUrlTimeList(d),
             urlResponseSize: parseUrlResponseSize(d),
             urlMethods: parseUrlMethodList(d),
             referrers: parseReferrerList(d),
@@ -213,17 +217,24 @@ var parse = function() {
     return data;
 }
 
-module.exports = function(req, res) {
-    var html = pug.renderFile(path.resolve(__dirname, 'src', 'dashboard.pug'), {
-        style: fs.readFileSync(path.resolve('node_modules', 'psychic-ui', 'dist', 'psychic-perisian.css')),
-        traffic: parse(),
+router.get('/', function(req, res) {
+    res.send(pug.renderFile(path.resolve(__dirname, 'src', 'dashboard.pug')));
+});
+
+router.get('/system/json', function(req, res) {
+    res.send({
         os: system,
         filesize: filesize,
         info: {
             version: process.version,
-            memory: filesize(os.totalmem()),
-            heap: filesize(process.memoryUsage().heapTotal)
+            memory: filesize(os.totalmem() || 0),
+            heap: filesize(process.memoryUsage().heapTotal || 0)
         }
     });
-    res.send(html);
-};
+});
+
+router.get('/request/json', function(req, res) {
+    res.send(parse());
+});
+
+module.exports = router;

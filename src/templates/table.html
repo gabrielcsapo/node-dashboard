@@ -1,0 +1,19 @@
+<div>
+    <h3 style="text-align: center;"> <%= title %> </h3>
+    <table class="table responsive">
+      <tr>
+        <% _.each(keys, function(key) { %>
+            <th><%= key %></th>
+        <% }); %>
+      </tr>
+      <% _.each(data, function(d) { %>
+          <tbody>
+              <tr>
+                  <% _.each(d, function(_d) { %>
+                    <td> <%= _d %></td>
+                  <% }); %>
+              </tr>
+          </tbody>
+      <% }); %>
+    </table>
+</div>
