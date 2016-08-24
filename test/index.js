@@ -19,7 +19,7 @@ describe('node-dashboard', function() {
         done();
     });
 
-    var sub = ['', 'sav.'];
+    var sub = [''];
     var referrer = ['noruc.gm', 'imajupet.hn','milo.gt','wubi.vn','rekwo.nz'];
 
     for(var i = 0; i < 75; i++) {

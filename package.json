@@ -28,10 +28,13 @@
     "underscore": "^1.8.3"
   },
   "devDependencies": {
+    "bootstrap": "^3.3.7",
     "browserify": "^13.1.0",
     "browserify-css": "^0.9.1",
     "c3": "^0.4.11",
     "chance": "^1.0.4",
+    "chartjs": "^0.3.24",
+    "d3": "^3.5.17",
     "eslint": "^3.2.2",
     "express": "^4.14.0",
     "grunt": "^1.0.1",
@@ -40,8 +43,8 @@
     "mocha": "^3.0.2",
     "random-ua": "0.0.6",
     "request": "^2.74.0",
+    "socket.io": "^1.4.8",
     "supertest": "^2.0.0",
-    "psychic-ui": "^0.4.0",
     "uglify-js": "^2.7.0"
   }
 }

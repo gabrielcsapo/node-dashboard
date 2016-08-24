@@ -205,6 +205,7 @@ var parse = function() {
             domain: key,
             countries: parseCountryList(d),
             urls: parseUrlList(d),
+            urlTimes: parseUrlTimeList(d),
             urlAverageTime: parseUrlAverageTime(d),
             urlResponseSize: parseUrlResponseSize(d),
             urlMethods: parseUrlMethodList(d),
