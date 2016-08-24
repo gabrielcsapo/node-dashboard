@@ -1,294 +1,279 @@
-/** 'countries', 'referrers', 'status', 'urls', 'urlAverageTime' **/
-var Chart = require('chart.js');
-var moment = require('moment');
-var chance = require('chance')();
-var _ = require('underscore');
+require('bootstrap/dist/css/bootstrap.min.css');
+require('./dashboard.css');
+require('c3/c3.min.css');
 
-window.createGraphs = function(d) {
-    if(d) {
-        d = JSON.parse(d);
-        createCountryGraph(d);
-        createReferrersGraph(d);
-        createStatusGraph(d);
-        createTrafficGraph(d);
-        createUrlGraph(d);
-        createUrlAverageTime(d);
-        createBrowserGraph(d);
-        createOSGraph(d);
-        urlResponseSizeGraph(d);
-        createMethodGraph(d);
-    }
-}
+window._ = require('underscore'); // needs to be globaly ascessible
+var templates = require('./templates');
+var request = require('request');
+var c3 = require('c3');
 
-window.createOSGraphs = function() {
-    (function() {
-        var labels = [];
-        var data = [];
-        var d = JSON.parse(document.getElementById('memory-graph').dataset['storedvalues']);
-        d.forEach(function(s) {
-            data.push(s[1]);
-            labels.push(moment(s[0]).format('HH:mm:ss'));
-        });
-        createGraph(
-            document.querySelector('#memory-graph canvas'),
-            labels,
-            data,
-            'Memory Usage',
-            'line'
-        );
-    }());
+var Table = templates['JST']['src/templates/table.html'];
+var Entry = templates['JST']['src/templates/entry.html'];
 
-    (function() {
-        var labels = [];
-        var data = [];
-        var d = JSON.parse(document.getElementById('cpu-graph').dataset['storedvalues']);
-        d.forEach(function(s) {
-            data.push(s[1]);
-            labels.push(moment(s[0]).format('HH:mm:ss'));
-        });
-        createGraph(
-            document.querySelector('#cpu-graph canvas'),
-            labels,
-            data,
-            'CPU Usage',
-            'line'
-        );
-    }());
+var Layout = [];
 
-    (function() {
-        var labels = [];
-        var data = [];
-        var d = JSON.parse(document.getElementById('heap-graph').dataset['storedvalues']);
-        d.forEach(function(s) {
-            data.push(s[1]);
-            labels.push(moment(s[0]).format('HH:mm:ss'));
-        });
-        createGraph(
-            document.querySelector('#heap-graph canvas'),
-            labels,
-            data,
-            'Heap Usage',
-            'line'
-        );
-    }());
-}
+var Graphs = [];
 
-var createGraph = function(ctx, labels, data, label, type) {
-    var color = chance.color({format: 'rgb'});
-    new Chart(ctx, {
-        type: type || 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: label,
-                data: data,
-                backgroundColor: color,
-                borderColor: color.replace(')', ',0.1)')
-            }]
-        },
-        options: {
-            maintainAspectRatio: false,
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
+request(window.location.href + '/request/json', function (error, response, body) {
+    JSON.parse(body).forEach(function(host) {
+        var Page = {
+            header: [],
+            body: []
+        }
+        Object.keys(host).sort().forEach(function(key) {
+            switch(key) {
+                case 'domain':
+                    Page.header.push('<div class="col-12-12"><h3 style="text-align:center;">' + host[key] + '</h3></div>');
+                break;
+                case 'browsers':
+                    var data = Object.keys(host[key] || {}).map(function(k) {
+                        return [k, host[key][k]]
+                    });
+                    Page.body.push(Entry({
+                        id: 'browsers-' + host['domain'],
+                        title: 'Browsers',
+                        table: Table({
+                            keys: ['Browser', 'Hits'],
+                            data: data
+                        })
+                    }));
+                    Graphs.push(function() {
+                        var chart = c3.generate({
+                            size: { height: 400 },
+                            bindto: '#browsers-' + host['domain'],
+                            data: {
+                                columns: data,
+                                type: 'bar'
+                            }
+                        });
+                    });
+                break;
+                case 'countries':
+                    var data = Object.keys(host[key] || {}).map(function(k) {
+                        return [k, host[key][k]]
+                    });
+                    Page.body.push(Entry({
+                        id: 'contries-' + host['domain'],
+                        title: 'Countries',
+                        table: Table({
+                            keys: ['Country', 'Hits'],
+                            data: data
+                        })
+                    }));
+                    Graphs.push(function() {
+                        var chart = c3.generate({
+                            size: { height: 400 },
+                            bindto: '#contries-' + host['domain'],
+                            data: {
+                                columns: data,
+                                type: 'bar'
+                            }
+                        });
+                    });
+                break;
+                case 'urls':
+                    var data = Object.keys(host[key] || {}).map(function(k) {
+                        return [k, host[key][k]]
+                    });
+                    Page.body.push(Entry({
+                        id: 'urls-' + host['domain'],
+                        title: 'Urls',
+                        table: Table({
+                            keys: ['Urls', 'Hits'],
+                            data: data
+                        })
+                    }));
+                    Graphs.push(function() {
+                        var chart = c3.generate({
+                            size: { height: 400 },
+                            bindto: '#urls-' + host['domain'],
+                            data: {
+                                columns: data,
+                                type: 'bar'
+                            }
+                        });
+                    });
+                break;
+                case 'urlAverageTime':
+                    var data = Object.keys(host[key] || {}).map(function(k) {
+                        return [k, host[key][k]]
+                    });
+                    Page.body.push(Entry({
+                        id: 'url-average-time-' + host['domain'],
+                        title: 'Url Average Time',
+                        table: Table({
+                            keys: ['Urls', 'Average Time'],
+                            data: data
+                        })
+                    }));
+                    Graphs.push(function() {
+                        var chart = c3.generate({
+                            size: { height: 400 },
+                            bindto: '#url-average-time-' + host['domain'],
+                            data: {
+                                columns: data,
+                                type: 'bar'
+                            }
+                        });
+                    });
+                break;
+                case 'urlTimes':
+                    var data = host[key].map(function(u) {
+                        var ret = [u.url];
+                        u.time.forEach(function(t) {
+                            ret.push(t.time);
+                        });
+                        return ret;
+                    });
+                    Page.body.push(Entry({
+                        id: 'url-times-' + host['domain'],
+                        title: 'Url Times',
+                        table: ''
+                    }));
+                    Graphs.push(function() {
+                        var chart = c3.generate({
+                            size: { height: 400 },
+                            bindto: '#url-times-' + host['domain'],
+                            data: {
+                                columns: data,
+                                type: 'area-spline'
+                            }
+                        });
+                    });
+                break;
+                case 'urlResponseSize':
+                    var data = Object.keys(host[key] || {}).map(function(i) {
+                        return [host[key][i].url, host[key][i].amount, host[key][i].size]
+                    });
+                    Page.body.push(Entry({
+                        id: 'url-response-size-' + host['domain'],
+                        title: 'Url Response Size',
+                        table: Table({
+                            keys: ['Url', 'Hits', 'Size'],
+                            data: data
+                        })
+                    }));
+                    Graphs.push(function() {
+                        var chart = c3.generate({
+                            size: { height: 400 },
+                            bindto: '#url-response-size-' + host['domain'],
+                            data: {
+                                columns: data.map(function(d) {
+                                    // remove hits from array
+                                    d.splice(1, 1);
+                                    return d;
+                                }),
+                                type: 'bar'
+                            }
+                        });
+                    });
+                break;
+                case 'urlMethods':
+                    var data = Object.keys(host[key] || {}).map(function(i) {
+                        return Object.keys(host[key][i].methods || {}).map(function(m) {
+                            return [host[key][i].url, m, host[key][i].methods[m]]
+                        });
+                    });
+                    data = [].concat.apply([], data);
+                    Page.body.push(Entry({
+                        id: 'url-methods-' + host['domain'],
+                        title: 'Url Methods',
+                        table: Table({
+                            keys: ['Url', 'Method', 'Hits'],
+                            data: data
+                        })
+                    }));
+                    Graphs.push(function() {
+                        var chart = c3.generate({
+                            size: { height: 400 },
+                            bindto: '#url-methods-' + host['domain'],
+                            data: {
+                                columns: data.map(function(f){
+                                    return [f[0] + '-' + f[1], f[2]];
+                                }),
+                                type: 'bar'
+                            }
+                        });
+                    });
+                break;
+                case 'referrers':
+                    var data = Object.keys(host[key] || {}).map(function(k) {
+                        return [k, host[key][k]]
+                    });
+                    Page.body.push(Entry({
+                        id: 'referrers-' + host['domain'],
+                        title: 'Referrers',
+                        table: Table({
+                            keys: ['Referrer', 'Hits'],
+                            data: data
+                        })
+                    }));
+                    Graphs.push(function() {
+                        var chart = c3.generate({
+                            size: { height: 400 },
+                            bindto: '#referrers-' + host['domain'],
+                            data: {
+                                columns: data,
+                                type: 'bar'
+                            }
+                        });
+                    });
+                break;
+                case 'status':
+                    var data = Object.keys(host[key] || {}).map(function(k) {
+                        return [k, host[key][k]]
+                    });
+                    Page.body.push(Entry({
+                        id: 'http-statuses-' + host['domain'],
+                        title: 'HTTP Statuses',
+                        table: Table({
+                            keys: ['Status', 'Hits'],
+                            data: data
+                        })
+                    }));
+                    Graphs.push(function() {
+                        var chart = c3.generate({
+                            size: { height: 400 },
+                            bindto: '#http-statuses-' + host['domain'],
+                            data: {
+                                columns: data,
+                                type: 'bar'
+                            }
+                        });
+                    });
+                break;
+                case 'os':
+                    var data = Object.keys(host[key] || {}).map(function(k) {
+                        return [k, host[key][k]]
+                    });
+                    Page.body.push(Entry({
+                        id: 'os-' + host['domain'],
+                        title: 'Operating Systems',
+                        table: Table({
+                            keys: ['OS', 'Hits'],
+                            data: data
+                        })
+                    }));
+                    Graphs.push(function() {
+                        var chart = c3.generate({
+                            size: { height: 400 },
+                            bindto: '#os-' + host['domain'],
+                            data: {
+                                columns: data,
+                                type: 'bar'
+                            }
+                        });
+                    });
+                break;
             }
-        }
-    });
-}
-
-var createUrlAverageTime = function(d) {
-    var labels = [];
-    var data = [];
-    document.getElementById('label-graph-urlAverageTime-' + d.domain).checked = true;
-    Object.keys(d.urlAverageTime).forEach(function(u) {
-        labels.push(d.urlAverageTime[u].url);
-        data.push(d.urlAverageTime[u].time);
-    });
-    createGraph(
-        document.querySelector('#' + d.domain + '-urlAverageTime canvas'),
-        labels,
-        data,
-        'Url Average Time'
-    );
-}
-
-var createUrlGraph = function(d) {
-    var labels = [];
-    var data = [];
-    document.getElementById('label-graph-urls-' + d.domain).checked = true;
-    Object.keys(d.urls).forEach(function(u) {
-        labels.push(d.urls[u].url);
-        data.push(d.urls[u].count);
-    });
-    createGraph(
-        document.querySelector('#' + d.domain + '-urls canvas'),
-        labels,
-        data,
-        'Url Hits'
-    );
-}
-
-var createBrowserGraph = function(d) {
-    var labels = [];
-    var data = [];
-    document.getElementById('label-graph-browsers-' + d.domain).checked = true;
-    Object.keys(d.browsers).forEach(function(s) {
-        labels.push(s);
-        data.push(d.browsers[s]);
-    });
-    createGraph(
-        document.querySelector('#' + d.domain + '-browsers canvas'),
-        labels,
-        data,
-        'Browsers'
-    );
-}
-
-var createOSGraph = function(d) {
-    var labels = [];
-    var data = [];
-    document.getElementById('label-graph-os-' + d.domain).checked = true;
-    Object.keys(d.os).forEach(function(s) {
-        labels.push(s);
-        data.push(d.os[s]);
-    });
-    createGraph(
-        document.querySelector('#' + d.domain + '-os canvas'),
-        labels,
-        data,
-        'OS'
-    );
-}
-
-var createStatusGraph = function(d) {
-    var labels = [];
-    var data = [];
-    document.getElementById('label-graph-status-' + d.domain).checked = true;
-    Object.keys(d.status).forEach(function(s) {
-        labels.push(s);
-        data.push(d.status[s]);
-    });
-    createGraph(
-        document.querySelector('#' + d.domain + '-status canvas'),
-        labels,
-        data,
-        'HTTP Statuses'
-    );
-}
-
-var createReferrersGraph = function(d) {
-    var labels = [];
-    var data = [];
-    document.getElementById('label-graph-referrers-' + d.domain).checked = true;
-    Object.keys(d.referrers).forEach(function(r) {
-        labels.push(r);
-        data.push(d.referrers[r]);
-    });
-    createGraph(
-        document.querySelector('#' + d.domain + '-referrers canvas'),
-        labels,
-        data,
-        'Refferers'
-    );
-}
-
-var urlResponseSizeGraph = function(d) {
-    var labels = [];
-    var data = [];
-    document.getElementById('label-graph-urlResponseSize-' + d.domain).checked = true;
-    Object.keys(d.urlResponseSize).forEach(function(u) {
-        labels.push(d.urlResponseSize[u].url);
-        data.push(d.urlResponseSize[u].size);
-    });
-    createGraph(
-        document.querySelector('#' + d.domain + '-urlResponseSize canvas'),
-        labels,
-        data,
-        'Url Response Size'
-    );
-}
-
-var createCountryGraph = function(d) {
-    var labels = [];
-    var data = [];
-    document.getElementById('label-graph-countries-' + d.domain).checked = true;
-    Object.keys(d.countries).forEach(function(c) {
-        labels.push(c);
-        data.push(d.countries[c]);
-    });
-    createGraph(
-        document.querySelector('#' + d.domain + '-countries canvas'),
-        labels,
-        data,
-        'Countries'
-    );
-}
-
-var createTrafficGraph = function(d) {
-    var data = [];
-    d.urlTimes.forEach(function(c) {
-        data.push({
-            label: c.url,
-            backgroundColor: 'rgba(255, 255, 255, 0)',
-            borderColor: chance.color({format: 'rgb'}),
-            data: _.map(c.time, function(t) {
-                return { y: t.time, x: t.date }
-            })
         });
+        Layout.push(Page.header.join('') + Page.body.join(''));
     });
-    new Chart(document.querySelector('#' + d.domain + '-traffic canvas'), {
-        type: 'line',
-        data: {
-            labels: [],
-            datasets: data
-        },
-        options: {
-            maintainAspectRatio: false,
-            scales: {
-                xAxes: [{
-                    type: 'linear',
-                    position: 'bottom'
-                }]
-            }
-        }
-    });
-}
 
-var createMethodGraph = function(d) {
-    var labels = [];
-    var data = [];
-    var color = chance.color({format: 'rgb'});
-    d.urlMethods.forEach(function(c) {
-        var url = c.url;
-        for(var key in c.methods) {
-            labels.push(url + '-' + key);
-            data.push(c.methods[key]);
-        }
+    document.querySelector('.container').innerHTML = Layout.join('<br><hr class="ellipsis"/><br><br>');
+
+    // Stamp out the graphs
+    Graphs.forEach(function(graph) {
+        graph();
     });
-    document.getElementById('label-graph-urlMethods-' + d.domain).checked = true;
-    new Chart(document.querySelector('#' + d.domain + '-urlMethods canvas'), {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Url Methods',
-                data: data,
-                backgroundColor: color,
-                borderColor: color.replace(')', ',0.1)')
-            }]
-        },
-        options: {
-            maintainAspectRatio: false,
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
-            }
-        }
-    });
-}
+});

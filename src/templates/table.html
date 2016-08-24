@@ -1,0 +1,24 @@
+<div>
+    <table class="table table-responsive table-condensed">
+      <thead>
+          <tr>
+            <% _.each(keys, function(key) { %>
+                <th><%= key %></th>
+            <% }); %>
+          </tr>
+      </thead>
+    </table>
+    <div style="height:400px;overflow:scroll;">
+        <table class="table table-responsive table-condensed">
+            <tbody>
+            <% _.each(data, function(d) { %>
+                <tr>
+                    <% _.each(d, function(_d) { %>
+                      <td> <%= _d %></td>
+                    <% }); %>
+                </tr>
+            <% }); %>
+            </tbody>
+        </table>
+    </div>
+</div>

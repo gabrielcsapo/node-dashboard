@@ -1,0 +1,28 @@
+@media screen and (min-width:48em){
+    .col-md-4-12 {
+        width: 32.33333% !important;
+    }
+}
+.column {
+    max-height: 500px !important;
+    height: 500px !important;
+}
+.icon {
+    display: block;
+    color: white;
+    fill: currentColor
+}
+.nav > a {
+    display: block;
+    padding-bottom: 20px;
+}
+.nav > a:hover, .nav > a:hover .icon {
+    border: 0;
+    color: rgb(177, 177, 177);
+}
+.c3 path {
+    stroke: #dedede !important;
+}
+table {
+    margin-bottom: 0 !important;
+}
