@@ -40,6 +40,9 @@ request(window.location.href + '/request/json', function (error, response, body)
                     Graphs.push(function() {
                         var chart = c3.generate({
                             size: { height: 400 },
+                            legend: {
+                              hide: true
+                            },
                             bindto: '#browsers-' + host['domain'],
                             data: {
                                 columns: data,
@@ -63,6 +66,9 @@ request(window.location.href + '/request/json', function (error, response, body)
                     Graphs.push(function() {
                         var chart = c3.generate({
                             size: { height: 400 },
+                            legend: {
+                              hide: true
+                            },
                             bindto: '#contries-' + host['domain'],
                             data: {
                                 columns: data,
@@ -86,6 +92,9 @@ request(window.location.href + '/request/json', function (error, response, body)
                     Graphs.push(function() {
                         var chart = c3.generate({
                             size: { height: 400 },
+                            legend: {
+                              hide: true
+                            },
                             bindto: '#urls-' + host['domain'],
                             data: {
                                 columns: data,
@@ -109,6 +118,9 @@ request(window.location.href + '/request/json', function (error, response, body)
                     Graphs.push(function() {
                         var chart = c3.generate({
                             size: { height: 400 },
+                            legend: {
+                              hide: true
+                            },
                             bindto: '#url-average-time-' + host['domain'],
                             data: {
                                 columns: data,
@@ -133,6 +145,9 @@ request(window.location.href + '/request/json', function (error, response, body)
                     Graphs.push(function() {
                         var chart = c3.generate({
                             size: { height: 400 },
+                            legend: {
+                              hide: true
+                            },
                             bindto: '#url-times-' + host['domain'],
                             data: {
                                 columns: data,
@@ -156,6 +171,9 @@ request(window.location.href + '/request/json', function (error, response, body)
                     Graphs.push(function() {
                         var chart = c3.generate({
                             size: { height: 400 },
+                            legend: {
+                              hide: true
+                            },
                             bindto: '#url-response-size-' + host['domain'],
                             data: {
                                 columns: data.map(function(d) {
@@ -186,6 +204,9 @@ request(window.location.href + '/request/json', function (error, response, body)
                     Graphs.push(function() {
                         var chart = c3.generate({
                             size: { height: 400 },
+                            legend: {
+                              hide: true
+                            },
                             bindto: '#url-methods-' + host['domain'],
                             data: {
                                 columns: data.map(function(f){
@@ -211,6 +232,9 @@ request(window.location.href + '/request/json', function (error, response, body)
                     Graphs.push(function() {
                         var chart = c3.generate({
                             size: { height: 400 },
+                            legend: {
+                              hide: true
+                            },
                             bindto: '#referrers-' + host['domain'],
                             data: {
                                 columns: data,
@@ -234,6 +258,9 @@ request(window.location.href + '/request/json', function (error, response, body)
                     Graphs.push(function() {
                         var chart = c3.generate({
                             size: { height: 400 },
+                            legend: {
+                              hide: true
+                            },
                             bindto: '#http-statuses-' + host['domain'],
                             data: {
                                 columns: data,
@@ -257,6 +284,9 @@ request(window.location.href + '/request/json', function (error, response, body)
                     Graphs.push(function() {
                         var chart = c3.generate({
                             size: { height: 400 },
+                            legend: {
+                              hide: true
+                            },
                             bindto: '#os-' + host['domain'],
                             data: {
                                 columns: data,

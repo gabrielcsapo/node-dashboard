@@ -78,16 +78,12 @@ var parseCountryList = function(d) {
 ex: returns { '/distribute': 11 }
 **/
 var parseUrlList = function(d) {
-    return _.flatten(_.map(d, function(route) {
-        return route.url;
-    })).reduce(function(acc, curr) {
-        if (typeof acc[curr] == 'undefined') {
-            acc[curr] = 1;
-        } else {
-            acc[curr] += 1;
-        }
-        return acc;
-    }, {});
+    var temp = {};
+    _.map(d, function(route) {
+        temp[route.url] = route.traffic.length;
+    });
+    console.log(temp);
+    return temp;
 }
 
 /**
