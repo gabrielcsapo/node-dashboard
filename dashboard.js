@@ -5,7 +5,6 @@ var db = flat('dashboard.json', {
 var express = require('express');
 var router = express.Router();
 var path = require('path');
-var fs = require('fs');
 var pug = require('pug');
 var _ = require('underscore');
 var os = require('os');
