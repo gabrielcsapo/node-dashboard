@@ -82,7 +82,6 @@ var parseUrlList = function(d) {
     _.map(d, function(route) {
         temp[route.url] = route.traffic.length;
     });
-    console.log(temp);
     return temp;
 }
 

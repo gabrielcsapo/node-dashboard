@@ -14,6 +14,8 @@ var Layout = [];
 
 var Graphs = [];
 
+var Charts = {};
+
 request(window.location.href + '/request/json', function (error, response, body) {
     JSON.parse(body).forEach(function(host) {
         var Page = {
@@ -38,10 +40,16 @@ request(window.location.href + '/request/json', function (error, response, body)
                         })
                     }));
                     Graphs.push(function() {
-                        var chart = c3.generate({
+                        document.getElementById('select-browsers-' + host['domain']).addEventListener('change', function(ev){
+                            Charts['browsers-' + host['domain']].transform(ev.target.value);
+                        });
+                        Charts['browsers-' + host['domain']] = c3.generate({
                             size: { height: 400 },
                             legend: {
                               hide: true
+                            },
+                            tooltip: {
+                                grouped: false
                             },
                             bindto: '#browsers-' + host['domain'],
                             data: {
@@ -56,7 +64,7 @@ request(window.location.href + '/request/json', function (error, response, body)
                         return [k, host[key][k]]
                     });
                     Page.body.push(Entry({
-                        id: 'contries-' + host['domain'],
+                        id: 'countries-' + host['domain'],
                         title: 'Countries',
                         table: Table({
                             keys: ['Country', 'Hits'],
@@ -64,12 +72,18 @@ request(window.location.href + '/request/json', function (error, response, body)
                         })
                     }));
                     Graphs.push(function() {
-                        var chart = c3.generate({
+                        document.getElementById('select-countries-' + host['domain']).addEventListener('change', function(ev){
+                            Charts['countries-' + host['domain']].transform(ev.target.value);
+                        });
+                        Charts['countries-' + host['domain']] = c3.generate({
                             size: { height: 400 },
                             legend: {
                               hide: true
                             },
-                            bindto: '#contries-' + host['domain'],
+                            tooltip: {
+                                grouped: false
+                            },
+                            bindto: '#countries-' + host['domain'],
                             data: {
                                 columns: data,
                                 type: 'bar'
@@ -90,10 +104,16 @@ request(window.location.href + '/request/json', function (error, response, body)
                         })
                     }));
                     Graphs.push(function() {
-                        var chart = c3.generate({
+                        document.getElementById('select-urls-' + host['domain']).addEventListener('change', function(ev){
+                            Charts['urls-' + host['domain']].transform(ev.target.value);
+                        });
+                        Charts['urls-' + host['domain']] = c3.generate({
                             size: { height: 400 },
                             legend: {
                               hide: true
+                            },
+                            tooltip: {
+                                grouped: false
                             },
                             bindto: '#urls-' + host['domain'],
                             data: {
@@ -116,10 +136,16 @@ request(window.location.href + '/request/json', function (error, response, body)
                         })
                     }));
                     Graphs.push(function() {
-                        var chart = c3.generate({
+                        document.getElementById('select-url-average-time-' + host['domain']).addEventListener('change', function(ev){
+                            Charts['url-average-time-' + host['domain']].transform(ev.target.value);
+                        });
+                        Charts['url-average-time-' + host['domain']] = c3.generate({
                             size: { height: 400 },
                             legend: {
                               hide: true
+                            },
+                            tooltip: {
+                                grouped: false
                             },
                             bindto: '#url-average-time-' + host['domain'],
                             data: {
@@ -143,7 +169,10 @@ request(window.location.href + '/request/json', function (error, response, body)
                         table: ''
                     }));
                     Graphs.push(function() {
-                        var chart = c3.generate({
+                        document.getElementById('select-url-times-' + host['domain']).addEventListener('change', function(ev){
+                            Charts['url-times-' + host['domain']].transform(ev.target.value);
+                        });
+                        Charts['url-times-' + host['domain']] = c3.generate({
                             size: { height: 400 },
                             legend: {
                               hide: true
@@ -151,7 +180,7 @@ request(window.location.href + '/request/json', function (error, response, body)
                             bindto: '#url-times-' + host['domain'],
                             data: {
                                 columns: data,
-                                type: 'area-spline'
+                                type: 'bar'
                             }
                         });
                     });
@@ -169,10 +198,16 @@ request(window.location.href + '/request/json', function (error, response, body)
                         })
                     }));
                     Graphs.push(function() {
-                        var chart = c3.generate({
+                        document.getElementById('select-url-response-size-' + host['domain']).addEventListener('change', function(ev){
+                            Charts['url-response-size-' + host['domain']].transform(ev.target.value);
+                        });
+                        Charts['url-response-size-' + host['domain']] = c3.generate({
                             size: { height: 400 },
                             legend: {
                               hide: true
+                            },
+                            tooltip: {
+                                grouped: false
                             },
                             bindto: '#url-response-size-' + host['domain'],
                             data: {
@@ -202,10 +237,16 @@ request(window.location.href + '/request/json', function (error, response, body)
                         })
                     }));
                     Graphs.push(function() {
-                        var chart = c3.generate({
+                        document.getElementById('select-url-methods-' + host['domain']).addEventListener('change', function(ev){
+                            Charts['url-methods-' + host['domain']].transform(ev.target.value);
+                        });
+                        Charts['url-methods-' + host['domain']] = c3.generate({
                             size: { height: 400 },
                             legend: {
                               hide: true
+                            },
+                            tooltip: {
+                                grouped: false
                             },
                             bindto: '#url-methods-' + host['domain'],
                             data: {
@@ -230,10 +271,16 @@ request(window.location.href + '/request/json', function (error, response, body)
                         })
                     }));
                     Graphs.push(function() {
-                        var chart = c3.generate({
+                        document.getElementById('select-referrers-' + host['domain']).addEventListener('change', function(ev){
+                            Charts['referrers-' + host['domain']].transform(ev.target.value);
+                        });
+                        Charts['referrers-' + host['domain']] = c3.generate({
                             size: { height: 400 },
                             legend: {
                               hide: true
+                            },
+                            tooltip: {
+                                grouped: false
                             },
                             bindto: '#referrers-' + host['domain'],
                             data: {
@@ -256,10 +303,16 @@ request(window.location.href + '/request/json', function (error, response, body)
                         })
                     }));
                     Graphs.push(function() {
-                        var chart = c3.generate({
+                        document.getElementById('select-http-statuses-' + host['domain']).addEventListener('change', function(ev){
+                            Charts['http-statuses-' + host['domain']].transform(ev.target.value);
+                        });
+                        Charts['http-statuses-' + host['domain']] = c3.generate({
                             size: { height: 400 },
                             legend: {
                               hide: true
+                            },
+                            tooltip: {
+                                grouped: false
                             },
                             bindto: '#http-statuses-' + host['domain'],
                             data: {
@@ -282,10 +335,16 @@ request(window.location.href + '/request/json', function (error, response, body)
                         })
                     }));
                     Graphs.push(function() {
-                        var chart = c3.generate({
+                        document.getElementById('select-os-' + host['domain']).addEventListener('change', function(ev){
+                            Charts['os-' + host['domain']].transform(ev.target.value);
+                        });
+                        Charts['os-' + host['domain']] = c3.generate({
                             size: { height: 400 },
                             legend: {
                               hide: true
+                            },
+                            tooltip: {
+                                grouped: false
                             },
                             bindto: '#os-' + host['domain'],
                             data: {
