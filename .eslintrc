@@ -4,5 +4,8 @@
       "node": true,
       "mocha": true,
       "browser": true
+  },
+  "rules": {
+    "no-redeclare": 0
   }
 }

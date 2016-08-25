@@ -1,2 +1,3 @@
 node_modules
-src/bundle.js
+src/templates.js
+dist/bundle.js

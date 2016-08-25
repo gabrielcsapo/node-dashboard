@@ -10,7 +10,7 @@ describe('node-dashboard', function() {
     before(function(done) {
         try {
             fs.unlinkSync(path.resolve(__dirname, '..', 'dashboard.json'));
-        } catch(ex) {} // eslint-disable-line no-empty
+        } catch (ex) {} // eslint-disable-line no-empty
         done();
     });
 
@@ -19,15 +19,14 @@ describe('node-dashboard', function() {
         done();
     });
 
-    var sub = [''];
-    var referrer = ['noruc.gm', 'imajupet.hn','milo.gt','wubi.vn','rekwo.nz'];
+    var referrer = ['noruc.gm', 'imajupet.hn', 'milo.gt', 'wubi.vn', 'rekwo.nz'];
 
-    for(var i = 0; i < 75; i++) {
+    for (var i = 0; i < 75; i++) {
         it('should test if routes are bound', function(done) {
             this.timeout(50000);
             request('http://localhost:1337')
                 .get('/')
-                .set('Host', _.sample(sub) + 'example.com')
+                .set('Host', 'http://localhost:1337')
                 .set('x-forwarded-for', chance.ip())
                 .set('user-agent', random_ua.generate())
                 .set('referrer', _.sample(referrer))
@@ -37,7 +36,7 @@ describe('node-dashboard', function() {
                     }
                     request('http://localhost:1337')
                         .get('/hello')
-                        .set('Host', _.sample(sub) + '.example.com')
+                        .set('Host', 'http://localhost:1337')
                         .set('x-forwarded-for', chance.ip())
                         .set('user-agent', random_ua.generate())
                         .set('referrer', _.sample(referrer))
@@ -47,7 +46,7 @@ describe('node-dashboard', function() {
                             }
                             request('http://localhost:1337')
                                 .get('/world')
-                                .set('Host', _.sample(sub) + '.example.com')
+                                .set('Host', 'http://localhost:1337')
                                 .set('x-forwarded-for', chance.ip())
                                 .set('user-agent', random_ua.generate())
                                 .set('referrer', _.sample(referrer))

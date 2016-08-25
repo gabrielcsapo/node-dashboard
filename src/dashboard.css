@@ -1,4 +1,4 @@
-@media screen and (min-width:48em){
+@media screen and (min-width:48em) {
     .col-md-4-12 {
         width: 32.33333% !important;
     }
@@ -12,17 +12,17 @@
     color: white;
     fill: currentColor
 }
-.nav > a {
+.nav> a {
     display: block;
     padding-bottom: 20px;
 }
-.nav > a:hover, .nav > a:hover .icon {
+.nav> a:hover, .nav> a:hover .icon {
     border: 0;
     color: rgb(177, 177, 177);
 }
 .c3 path {
     stroke: #dedede !important;
 }
-table {
+.table {
     margin-bottom: 0 !important;
 }

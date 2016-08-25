@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "grunt build; browserify -g browserify-css ./src/dashboard.js | uglifyjs > ./dist/bundle.js",
-    "test": "mocha"
+    "test": "./node_modules/.bin/eslint .;mocha;"
   },
   "repository": {
     "type": "git",
