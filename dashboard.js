@@ -168,25 +168,24 @@ var parseStatusList = function(d) {
 /**
 ex: returns [
     {
-        "url": "/distribute",
-        "time": [
-            {
-                "time": 0.299826,
-                "date": "1466144318850"
-            }
-        ]
+        time: 4.324841999999999,
+        date: '1472165962195',
+        url: '/'
     }
 ]
 **/
 var parseUrlTimeList = function(d) {
-    return _.map(d, function(route) {
-        return {
-            url: route.url,
-            time: _.map(route.traffic, function(t) {
-                return _.pick(t, 'time', 'date');
-            })
-        }
+    var list = _.map(d, function(route) {
+        return _.map(route.traffic, function(t) {
+            var temp = _.pick(t, 'time', 'date');
+            temp.url = route.url;
+            temp.date = parseInt(temp.date);
+            return temp;
+        });
     });
+    list = [].concat.apply([], list);
+    list = _.sortBy(list, 'date');
+    return list;
 }
 
 var parse = function() {

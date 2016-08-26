@@ -21,9 +21,9 @@ describe('node-dashboard', function() {
 
     var referrer = ['noruc.gm', 'imajupet.hn', 'milo.gt', 'wubi.vn', 'rekwo.nz'];
 
-    for (var i = 0; i < 75; i++) {
+    for (var i = 0; i < 25; i++) {
         it('should test if routes are bound', function(done) {
-            this.timeout(50000);
+            this.timeout(100000);
             request('http://localhost:1337')
                 .get('/')
                 .set('Host', 'http://localhost:1337')
@@ -54,7 +54,9 @@ describe('node-dashboard', function() {
                                     if (err) {
                                         throw err;
                                     }
-                                    done();
+                                    setTimeout(function() {
+                                        done();
+                                    }, Math.round(Math.random() * (3000 - 500)) + 500);
                                 });
                         });
                 });
