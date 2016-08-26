@@ -1,4 +1,5 @@
 var app = require('express')();
+var chance = require('chance')();
 var analytics = require('../index');
 var dashboard = require('../dashboard');
 
@@ -18,6 +19,12 @@ app.get('/world', function(req, res) {
     setTimeout(function() {
         res.send('world');
     }, 500);
+});
+
+app.get('/paragraph', function(req, res) {
+    setTimeout(function() {
+        res.send(chance.paragraph());
+    }, 750);
 });
 
 app.use('/admin', dashboard);

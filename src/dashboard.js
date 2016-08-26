@@ -6,14 +6,14 @@ window._ = require('underscore'); // needs to be globaly ascessible
 var templates = require('./templates');
 var request = require('request');
 var c3 = require('c3');
+var moment = require('moment');
 
 var Table = templates['JST']['src/templates/table.html'];
 var Entry = templates['JST']['src/templates/entry.html'];
+var Tooltip = templates['JST']['src/templates/tooltip.html'];
 
 var Layout = [];
-
 var Graphs = [];
-
 var Charts = {};
 
 request(window.location.href + '/request/json', function(error, response, body) {
@@ -164,17 +164,36 @@ request(window.location.href + '/request/json', function(error, response, body) 
                     });
                     break;
                 case 'urlTimes':
-                    var data = host[key].map(function(u) {
-                        var ret = [u.url];
-                        u.time.forEach(function(t) {
-                            ret.push(t.time);
-                        });
-                        return ret;
+                    var tableData = [];
+                    host[key].forEach(function(r) {
+                        tableData.push([r.url, r.time, moment(parseInt(r.date)).format()]);
                     });
+                    tableData = tableData.sort(function(a, b) {
+                        if (a[2] === b[2]) {
+                            return 0;
+                        } else {
+                            return (a[2] > b[2]) ? -1 : 1;
+                        }
+                    });
+                    var hashStringToColor = function(str) {
+                        var hash = 0;
+                        for (var i = 0; i < str.length; i++) {
+                            hash = str.charCodeAt(i) + ((hash << 5) - hash);
+                        }
+                        var color = '#';
+                        for (var i = 0; i < 3; i++) {
+                            var value = (hash >> (i * 8)) & 0xFF;
+                            color += ('00' + value.toString(16)).substr(-2);
+                        }
+                        return color;
+                    }
                     Page.body.push(Entry({
                         id: 'url-times-' + host['domain'],
                         title: 'Url Times',
-                        table: ''
+                        table: Table({
+                            keys: ['Url', 'Time', 'Date'],
+                            data: tableData
+                        })
                     }));
                     Graphs.push(function() {
                         document.getElementById('select-url-times-' + host['domain']).addEventListener('change', function(ev) {
@@ -187,10 +206,51 @@ request(window.location.href + '/request/json', function(error, response, body) 
                             legend: {
                                 hide: true
                             },
+                            tooltip: {
+                                grouped: false,
+                                contents: function(d) {
+                                    return Tooltip({
+                                        title: d[0].x,
+                                        data: [{
+                                            name: 'url',
+                                            value: host['urlTimes'][d[0].index].url,
+                                            color: hashStringToColor(host['urlTimes'][d[0].index].url)
+                                        }, {
+                                            name: 'time',
+                                            value: d[0].value,
+                                            color: hashStringToColor(host['urlTimes'][d[0].index].url)
+                                        }]
+                                    })
+                                }
+                            },
                             bindto: '#url-times-' + host['domain'],
                             data: {
-                                columns: data,
-                                type: 'bar'
+                                json: host['urlTimes'],
+                                keys: {
+                                    x: 'date',
+                                    value: ['time']
+                                },
+                                color: function (color, d) {
+                                    if(typeof d === 'object' && d.index) {
+                                        return hashStringToColor(host['urlTimes'][d.index].url)
+                                    } else {
+                                        return color;
+                                    }
+                                }
+                            },
+                            zoom: {
+                                enabled: true
+                            },
+                            subchart: {
+                                show: true
+                            },
+                            axis: {
+                                x: {
+                                    type: 'timeseries',
+                                    tick: {
+                                        format: '%d-%m-%Y %H:%M:%S'
+                                    }
+                                }
                             }
                         });
                     });
