@@ -12,11 +12,188 @@ var Table = templates['JST']['src/templates/table.html'];
 var Entry = templates['JST']['src/templates/entry.html'];
 var Tooltip = templates['JST']['src/templates/tooltip.html'];
 
-var Layout = [];
-var Graphs = [];
-var Charts = {};
+request(window.location.href + '/system/json', function(error, response, body) {
+    var Graphs = [];
+    var Charts = [];
+    var Pages = [];
 
-request(window.location.href + '/request/json', function(error, response, body) {
+    var data = JSON.parse(body);
+    Object.keys(data).sort().forEach(function(key) {
+        switch(key) {
+            case 'info':
+                var values = Object.keys(data[key]).sort().map(function(k) {
+                    return [k, data[key][k]];
+                });
+                var html = '<div class="col-md-12">'
+                    + '<h3 style="margin-left:40px;text-align:left;"> System </h3>'
+                    + '<div style="padding:10px;">'
+                        + Table({
+                            keys: ['key', 'values'],
+                            data: values
+                        })
+                    + '</div>'
+                + '</div>';
+                Pages.unshift(html);
+            break;
+            case 'mem':
+                Pages.push(Entry({
+                    id: 'memory-usage',
+                    title: 'Memory',
+                    table: ''
+                }));
+                Graphs.push(function() {
+                    document.getElementById('select-memory-usage').addEventListener('change', function(ev) {
+                        Charts['memory-usage'].transform(ev.target.value);
+                    });
+                    var columns = [['x'], ['mem']];
+                    data[key].forEach(function(d){
+                        columns[0].push(parseInt(d[0]));
+                        columns[1].push(d[1]);
+                    });
+                    Charts['memory-usage'] = c3.generate({
+                        size: {
+                            height: 400
+                        },
+                        legend: {
+                            hide: true
+                        },
+                        tooltip: {
+                            grouped: false
+                        },
+                        bindto: '#memory-usage',
+                        data: {
+                            x: 'x',
+                            columns: columns,
+                            type: 'area-spline'
+                        },
+                        zoom: {
+                            enabled: true
+                        },
+                        axis: {
+                            x: {
+                                type: 'timeseries',
+                                tick: {
+                                    count: 10,
+                                    format: '%I:%M:%S'
+                                }
+                            }
+                        }
+                    });
+                });
+            break;
+            case 'cpu':
+                Pages.push(Entry({
+                    id: 'cpu-usage',
+                    title: 'CPU',
+                    table: ''
+                }));
+                Graphs.push(function() {
+                    document.getElementById('select-cpu-usage').addEventListener('change', function(ev) {
+                        Charts['cpu-usage'].transform(ev.target.value);
+                    });
+                    var columns = [['x'], ['cpu']];
+                    data[key].forEach(function(d){
+                        columns[0].push(parseInt(d[0]));
+                        columns[1].push(d[1]);
+                    });
+                    Charts['cpu-usage'] = c3.generate({
+                        size: {
+                            height: 400
+                        },
+                        legend: {
+                            hide: true
+                        },
+                        tooltip: {
+                            grouped: false
+                        },
+                        bindto: '#cpu-usage',
+                        data: {
+                            x: 'x',
+                            columns: columns,
+                            type: 'area-spline'
+                        },
+                        zoom: {
+                            enabled: true
+                        },
+                        axis: {
+                            x: {
+                                type: 'timeseries',
+                                tick: {
+                                    count: 10,
+                                    format: '%I:%M:%S'
+                                }
+                            }
+                        }
+                    });
+                });
+            break;
+            case 'heap':
+                Pages.push(Entry({
+                    id: 'heap-usage',
+                    title: 'Heap',
+                    table: ''
+                }));
+                Graphs.push(function() {
+                    document.getElementById('select-heap-usage').addEventListener('change', function(ev) {
+                        Charts['heap-usage'].transform(ev.target.value);
+                    });
+                    var columns = [['x'], ['heap']];
+                    data[key].forEach(function(d){
+                        columns[0].push(parseInt(d[0]));
+                        columns[1].push(d[1]);
+                    });
+                    Charts['heap-usage'] = c3.generate({
+                        size: {
+                            height: 400
+                        },
+                        legend: {
+                            hide: true
+                        },
+                        tooltip: {
+                            grouped: false
+                        },
+                        bindto: '#heap-usage',
+                        data: {
+                            x: 'x',
+                            columns: columns,
+                            type: 'area-spline'
+                        },
+                        zoom: {
+                            enabled: true
+                        },
+                        axis: {
+                            x: {
+                                type: 'timeseries',
+                                tick: {
+                                    count: 10,
+                                    format: '%I:%M:%S'
+                                }
+                            }
+                        }
+                    });
+                });
+            break;
+        }
+
+        var html = '<div class="row">';
+        Pages.forEach(function(page) {
+            html += '<div class="col-md-6">' + page + '</div>';
+        });
+        html += '</div><hr>';
+        document.querySelector('#header').innerHTML = html;
+
+        // Stamp out the graphs
+        Graphs.forEach(function(graph) {
+            graph();
+        });
+    });
+});
+
+request(window.location.href + '/traffic/json', function(error, response, body) {
+    var Layout = [];
+    var Graphs = [];
+    var Charts = {};
+
     JSON.parse(body).forEach(function(host) {
         var Page = {
             header: [],
@@ -25,7 +202,7 @@ request(window.location.href + '/request/json', function(error, response, body) 
         Object.keys(host).sort().forEach(function(key) {
             switch (key) {
                 case 'domain':
-                    Page.header.push('<div class="col-12-12"><h3 style="text-align:center;">' + host[key] + '</h3></div>');
+                    Page.header.push('<div class="col-12-12"><h3 style="text-align:center;"> hostname: "' + host[key] + '"</h3></div><hr class="ellipsis"/>');
                     break;
                 case 'browsers':
                     var data = Object.keys(host[key] || {}).map(function(k) {
@@ -436,10 +613,10 @@ request(window.location.href + '/request/json', function(error, response, body) 
                     break;
             }
         });
-        Layout.push(Page.header.join('') + Page.body.join(''));
+        Layout.push(Page.header.join('') + Page.body.join('<hr>'));
     });
 
-    document.querySelector('#content').innerHTML = Layout.join('<br><hr class="ellipsis"/><br><br>');
+    document.querySelector('#content').innerHTML = Layout.join('<br><br><br>');
 
     // Stamp out the graphs
     Graphs.forEach(function(graph) {

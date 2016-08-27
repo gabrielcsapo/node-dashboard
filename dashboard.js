@@ -17,16 +17,16 @@ var system = {
     heap: []
 };
 
-setInterval(function() {
-    system.cpu.push([moment().format(), os.loadavg()[0]]);
-    system.mem.push([moment().format(), (process.memoryUsage().rss / 1024 / 1024)]);
-    system.heap.push([moment().format(), process.memoryUsage().heapUsed / 1024 / 1024]);
+var parseSystemStats = function() {
+    system.cpu.push([moment().format('X'), os.loadavg()[0]]);
+    system.mem.push([moment().format('X'), (process.memoryUsage().rss / 1024 / 1024)]);
+    system.heap.push([moment().format('X'), process.memoryUsage().heapUsed / 1024 / 1024]);
     if(system.mem.length > 30) {
         system.mem.pop();
         system.cpu.pop();
         system.heap.pop();
     }
-}, 10000);
+};
 
 var parseOSList = function(d) {
     return _.flatten(_.map(d, function(route) {
@@ -211,23 +211,31 @@ var parse = function() {
     return data;
 }
 
+parseSystemStats();
+setInterval(function() {
+    parseSystemStats();
+}, 10000);
+
 router.get('/', function(req, res) {
     res.send(pug.renderFile(path.resolve(__dirname, 'src', 'dashboard.pug')));
 });
 
 router.get('/system/json', function(req, res) {
     res.send({
-        os: system,
-        filesize: filesize,
+        cpu: system.cpu,
+        mem: system.mem,
+        heap: system.heap,
         info: {
+            arch: os.arch(),
+            hostname: os.hostname(),
+            platform: os.platform(),
             version: process.version,
-            memory: filesize(os.totalmem() || 0),
-            heap: filesize(process.memoryUsage().heapTotal || 0)
+            memory: filesize(os.totalmem() || 0)
         }
     });
 });
 
-router.get('/request/json', function(req, res) {
+router.get('/traffic/json', function(req, res) {
     res.send(parse());
 });
 
