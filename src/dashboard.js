@@ -439,7 +439,7 @@ request(window.location.href + '/request/json', function(error, response, body) 
         Layout.push(Page.header.join('') + Page.body.join(''));
     });
 
-    document.querySelector('.container').innerHTML = Layout.join('<br><hr class="ellipsis"/><br><br>');
+    document.querySelector('#content').innerHTML = Layout.join('<br><hr class="ellipsis"/><br><br>');
 
     // Stamp out the graphs
     Graphs.forEach(function(graph) {
