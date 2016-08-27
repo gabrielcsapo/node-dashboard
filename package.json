@@ -35,7 +35,7 @@
     "chance": "^1.0.4",
     "chartjs": "^0.3.24",
     "d3": "^3.5.17",
-    "eslint": "^3.2.2",
+    "eslint": "^3.4.0",
     "express": "^4.14.0",
     "grunt": "^1.0.1",
     "grunt-contrib-jst": "^1.0.0",
@@ -45,6 +45,6 @@
     "request": "^2.74.0",
     "socket.io": "^1.4.8",
     "supertest": "^2.0.0",
-    "uglify-js": "^2.7.0"
+    "uglify-js": "^2.7.3"
   }
 }
