@@ -1,8 +1,11 @@
+window._ = require('underscore'); // needs to be globaly ascessible
+var $ = window.$ = window.jQuery = require('jquery');
+
 require('bootstrap/dist/css/bootstrap.min.css');
+require('bootstrap/js/tab.js');
 require('./dashboard.css');
 require('c3/c3.min.css');
 
-window._ = require('underscore'); // needs to be globaly ascessible
 var templates = require('./templates');
 var request = require('request');
 var c3 = require('c3');
@@ -11,8 +14,14 @@ var moment = require('moment');
 var Table = templates['JST']['src/templates/table.html'];
 var Entry = templates['JST']['src/templates/entry.html'];
 var Tooltip = templates['JST']['src/templates/tooltip.html'];
+var Loader = templates['JST']['src/templates/loader.html'];
 
-request(window.location.href + '/system/json', function(error, response, body) {
+$(document).ready(function() {
+    document.querySelector('#header').innerHTML = Loader({});
+    document.querySelector('#content').innerHTML = Loader({});
+});
+
+request(window.location.href.replace('#', '') + '/system/json', function(error, response, body) {
     var Graphs = [];
     var Charts = [];
     var Pages = [];
@@ -52,7 +61,7 @@ request(window.location.href + '/system/json', function(error, response, body) {
                     });
                     Charts['memory-usage'] = c3.generate({
                         size: {
-                            height: 400
+                            height: 375
                         },
                         legend: {
                             hide: true
@@ -98,7 +107,7 @@ request(window.location.href + '/system/json', function(error, response, body) {
                     });
                     Charts['cpu-usage'] = c3.generate({
                         size: {
-                            height: 400
+                            height: 375
                         },
                         legend: {
                             hide: true
@@ -144,7 +153,7 @@ request(window.location.href + '/system/json', function(error, response, body) {
                     });
                     Charts['heap-usage'] = c3.generate({
                         size: {
-                            height: 400
+                            height: 375
                         },
                         legend: {
                             hide: true
@@ -189,7 +198,7 @@ request(window.location.href + '/system/json', function(error, response, body) {
     });
 });
 
-request(window.location.href + '/traffic/json', function(error, response, body) {
+request(window.location.href.replace('#', '') + '/traffic/json', function(error, response, body) {
     var Layout = [];
     var Graphs = [];
     var Charts = {};
@@ -222,7 +231,7 @@ request(window.location.href + '/traffic/json', function(error, response, body) 
                         });
                         Charts['browsers-' + host['domain']] = c3.generate({
                             size: {
-                                height: 400
+                                height: 375
                             },
                             legend: {
                                 hide: true
@@ -256,7 +265,7 @@ request(window.location.href + '/traffic/json', function(error, response, body) 
                         });
                         Charts['countries-' + host['domain']] = c3.generate({
                             size: {
-                                height: 400
+                                height: 375
                             },
                             legend: {
                                 hide: true
@@ -290,7 +299,7 @@ request(window.location.href + '/traffic/json', function(error, response, body) 
                         });
                         Charts['urls-' + host['domain']] = c3.generate({
                             size: {
-                                height: 400
+                                height: 375
                             },
                             legend: {
                                 hide: true
@@ -324,7 +333,7 @@ request(window.location.href + '/traffic/json', function(error, response, body) 
                         });
                         Charts['url-average-time-' + host['domain']] = c3.generate({
                             size: {
-                                height: 400
+                                height: 375
                             },
                             legend: {
                                 hide: true
@@ -343,7 +352,7 @@ request(window.location.href + '/traffic/json', function(error, response, body) 
                 case 'urlTimes':
                     var tableData = [];
                     host[key].forEach(function(r) {
-                        tableData.push([r.url, r.time, moment(parseInt(r.date)).format()]);
+                        tableData.push([r.url, r.time, moment(parseInt(r.date)).format(), r.contentType, r.status, r.size]);
                     });
                     tableData = tableData.sort(function(a, b) {
                         if (a[2] === b[2]) {
@@ -368,7 +377,7 @@ request(window.location.href + '/traffic/json', function(error, response, body) 
                         id: 'url-times-' + host['domain'],
                         title: 'Url Times',
                         table: Table({
-                            keys: ['Url', 'Time', 'Date'],
+                            keys: ['Url', 'Time', 'Date', 'Content Type', 'Status', 'Size'],
                             data: tableData
                         })
                     }));
@@ -378,7 +387,7 @@ request(window.location.href + '/traffic/json', function(error, response, body) 
                         });
                         Charts['url-times-' + host['domain']] = c3.generate({
                             size: {
-                                height: 400
+                                height: 375
                             },
                             legend: {
                                 hide: true
@@ -395,6 +404,18 @@ request(window.location.href + '/traffic/json', function(error, response, body) 
                                         }, {
                                             name: 'time',
                                             value: d[0].value,
+                                            color: hashStringToColor(host['urlTimes'][d[0].index].url)
+                                        }, {
+                                            name: 'contentType',
+                                            value: host['urlTimes'][d[0].index].contentType,
+                                            color: hashStringToColor(host['urlTimes'][d[0].index].url)
+                                        }, {
+                                            name: 'size',
+                                            value: host['urlTimes'][d[0].index].size,
+                                            color: hashStringToColor(host['urlTimes'][d[0].index].url)
+                                        }, {
+                                            name: 'status',
+                                            value: host['urlTimes'][d[0].index].status,
                                             color: hashStringToColor(host['urlTimes'][d[0].index].url)
                                         }]
                                     })
@@ -450,7 +471,7 @@ request(window.location.href + '/traffic/json', function(error, response, body) 
                         });
                         Charts['url-response-size-' + host['domain']] = c3.generate({
                             size: {
-                                height: 400
+                                height: 375
                             },
                             legend: {
                                 hide: true
@@ -491,7 +512,7 @@ request(window.location.href + '/traffic/json', function(error, response, body) 
                         });
                         Charts['url-methods-' + host['domain']] = c3.generate({
                             size: {
-                                height: 400
+                                height: 375
                             },
                             legend: {
                                 hide: true
@@ -527,7 +548,7 @@ request(window.location.href + '/traffic/json', function(error, response, body) 
                         });
                         Charts['referrers-' + host['domain']] = c3.generate({
                             size: {
-                                height: 400
+                                height: 375
                             },
                             legend: {
                                 hide: true
@@ -561,7 +582,7 @@ request(window.location.href + '/traffic/json', function(error, response, body) 
                         });
                         Charts['http-statuses-' + host['domain']] = c3.generate({
                             size: {
-                                height: 400
+                                height: 375
                             },
                             legend: {
                                 hide: true
@@ -595,7 +616,7 @@ request(window.location.href + '/traffic/json', function(error, response, body) 
                         });
                         Charts['os-' + host['domain']] = c3.generate({
                             size: {
-                                height: 400
+                                height: 375
                             },
                             legend: {
                                 hide: true
@@ -621,5 +642,10 @@ request(window.location.href + '/traffic/json', function(error, response, body) 
     // Stamp out the graphs
     Graphs.forEach(function(graph) {
         graph();
+    });
+
+    $('.nav-tabs a').click(function (e) {
+      e.preventDefault()
+      $(this).tab('show')
     });
 });

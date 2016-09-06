@@ -1,6 +1,6 @@
 {
   "name": "node-dashboard",
-  "version": "0.4.4",
+  "version": "0.5.0",
   "description": "plugin for express apps to generate a dashboard for all routes and traffic",
   "main": "index.js",
   "scripts": {
@@ -40,6 +40,7 @@
     "grunt": "^1.0.1",
     "grunt-contrib-jst": "^1.0.0",
     "grunt-screenshot": "^0.6.0",
+    "jquery": "^3.1.0",
     "mocha": "^3.0.2",
     "random-ua": "0.0.6",
     "request": "^2.74.0",

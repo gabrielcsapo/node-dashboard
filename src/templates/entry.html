@@ -1,44 +1,52 @@
-<div class="row" style="max-height:500px;margin-top: 15px;margin-bottom: 15px;">
+<div class="row">
     <% if(table) { %>
-    <div class="column col-md-4 col-sm-4 col-xs-12">
+    <div class="column col-md-12 col-sm-12 col-xs-12">
         <h3 style="text-align: center;"> <%= title %> </h3>
-        <div style="padding:10px;">
-            <%= table %>
+        <ul class="nav nav-tabs">
+            <li role="presentation" class="active">
+                <a href="#<%= id %>-graph">Graph</a>
+            </li>
+            <li role="presentation">
+                <a href="#<%= id %>-table">Table</a>
+            </li>
+        </ul>
+        <div class="tab-content" style="height:500px;overflow-y: scroll;overflow-x: hidden;">
+            <div class="tab-pane fade active in" role="tabpanel" id="<%= id %>-graph" style="height: auto;">
+                <h3 style="text-align:right;">
+                    <select id="select-<%= id %>">
+                      <option value="bar" selected> Bar </option>
+                      <option value="pie"> Pie </option>
+                      <option value="scatter"> Scatter </option>
+                      <option value="line"> Line </option>
+                      <option value="spline"> Spline </option>
+                      <option value="area-spline"> Area Spline </option>
+                    </select>
+                </h3>
+                <div id="<%= id %>" style="padding:10px;"></div>
+            </div>
+            <div class="tab-pane" role="tabpanel" id="<%= id %>-table" style="height: auto;">
+                <%= table %>
+            </div>
         </div>
-    </div>
-    <div class="column col-md-8 col-sm-8 col-xs-8">
-        <h3 style="text-align:right;">
-            <select id="select-<%= id %>">
-              <option value="bar" selected> Bar </option>
-              <option value="pie"> Pie </option>
-              <option value="scatter"> Scatter </option>
-              <option value="line"> Line </option>
-              <option value="spline"> Spline </option>
-              <option value="area-spline"> Area Spline </option>
-            </select>
-        </h3>
-        <div id="<%= id %>" style="padding:10px;"></div>
     </div>
     <% } else { %>
         <div class="column col-md-12 col-sm-12 col-xs-12">
-            <div style="padding:10px">
-                <div class="col-md-4 col-sm-4 col-xs-4">
-                    <h3 style="text-align:center;"> <%= title %> </h3>
-                </div>
-                <div class="col-md-8 col-sm-8 col-xs-8">
-                  <h3 style="text-align:right;">
-                      <select id="select-<%= id %>">
-                        <option value="bar" selected> Bar </option>
-                        <option value="pie"> Pie </option>
-                        <option value="scatter"> Scatter </option>
-                        <option value="line"> Line </option>
-                        <option value="spline"> Spline </option>
-                        <option value="area-spline"> Area Spline </option>
-                      </select>
-                  </h3>
-                </div>
-                <div id="<%= id %>" style="margin-top: 50px;"></div>
+            <div class="col-md-4 col-sm-4 col-xs-4">
+                <h3 style="text-align:center;"> <%= title %> </h3>
             </div>
+            <div class="col-md-8 col-sm-8 col-xs-8">
+              <h3 style="text-align:right;">
+                  <select id="select-<%= id %>">
+                    <option value="bar" selected> Bar </option>
+                    <option value="pie"> Pie </option>
+                    <option value="scatter"> Scatter </option>
+                    <option value="line"> Line </option>
+                    <option value="spline"> Spline </option>
+                    <option value="area-spline"> Area Spline </option>
+                  </select>
+              </h3>
+            </div>
+            <div id="<%= id %>" style="margin-top: 50px;"></div>
         </div>
     <% } %>
 </div>

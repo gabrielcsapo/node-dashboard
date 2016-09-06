@@ -37,6 +37,7 @@ module.exports = responseTime(function(req, res, time) {
             geo: geo,
             referrer: referrer,
             ua: ua,
+            contentType: res._headers['content-type'],
             size: res._headers['content-length']
         })
     } else {
@@ -51,6 +52,7 @@ module.exports = responseTime(function(req, res, time) {
                 geo: geo,
                 referrer: referrer,
                 ua: ua,
+                contentType: res._headers['content-type'],
                 size: res._headers['content-length']
             }]
         });

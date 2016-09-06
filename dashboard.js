@@ -170,6 +170,7 @@ ex: returns [
     {
         time: 4.324841999999999,
         date: '1472165962195',
+        contentType: 'application/json; charset=utf-8',
         url: '/'
     }
 ]
@@ -177,9 +178,10 @@ ex: returns [
 var parseUrlTimeList = function(d) {
     var list = _.map(d, function(route) {
         return _.map(route.traffic, function(t) {
-            var temp = _.pick(t, 'time', 'date');
+            var temp = _.pick(t, 'time', 'date', 'contentType', 'status', 'size');
             temp.url = route.url;
             temp.date = parseInt(temp.date);
+            temp.size = filesize(temp.size || 0);
             return temp;
         });
     });
