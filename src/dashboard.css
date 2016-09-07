@@ -3,6 +3,14 @@
         width: 32.33333% !important;
     }
 }
+table {
+  table-layout: fixed;
+}
+td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .row {
     margin-top: 15px;
     margin-bottom: 15px;
