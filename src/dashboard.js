@@ -216,6 +216,8 @@ request(window.location.href.replace('#', '') + '/traffic/json', function(error,
                 case 'browsers':
                     var data = Object.keys(host[key] || {}).map(function(k) {
                         return [k, host[key][k]]
+                    }).sort(function(a, b) {
+                      return parseInt(b[1]) - parseInt(a[1]);
                     });
                     Page.body.push(Entry({
                         id: 'browsers-' + host['domain'],
@@ -250,6 +252,8 @@ request(window.location.href.replace('#', '') + '/traffic/json', function(error,
                 case 'countries':
                     var data = Object.keys(host[key] || {}).map(function(k) {
                         return [k, host[key][k]]
+                    }).sort(function(a, b) {
+                      return parseInt(b[1]) - parseInt(a[1]);
                     });
                     Page.body.push(Entry({
                         id: 'countries-' + host['domain'],
@@ -284,6 +288,8 @@ request(window.location.href.replace('#', '') + '/traffic/json', function(error,
                 case 'urls':
                     var data = Object.keys(host[key] || {}).map(function(k) {
                         return [k, host[key][k]]
+                    }).sort(function(a, b) {
+                      return parseInt(b[1]) - parseInt(a[1]);
                     });
                     Page.body.push(Entry({
                         id: 'urls-' + host['domain'],
@@ -318,6 +324,8 @@ request(window.location.href.replace('#', '') + '/traffic/json', function(error,
                 case 'urlAverageTime':
                     var data = Object.keys(host[key] || {}).map(function(k) {
                         return [k, host[key][k]]
+                    }).sort(function(a, b) {
+                      return parseInt(b[1]) - parseInt(a[1]);
                     });
                     Page.body.push(Entry({
                         id: 'url-average-time-' + host['domain'],
@@ -456,6 +464,8 @@ request(window.location.href.replace('#', '') + '/traffic/json', function(error,
                 case 'urlResponseSize':
                     var data = Object.keys(host[key] || {}).map(function(i) {
                         return [host[key][i].url, host[key][i].amount, host[key][i].size]
+                    }).sort(function(a, b) {
+                      return parseInt(b[2]) - parseInt(a[2]);
                     });
                     Page.body.push(Entry({
                         id: 'url-response-size-' + host['domain'],
@@ -496,6 +506,8 @@ request(window.location.href.replace('#', '') + '/traffic/json', function(error,
                         return Object.keys(host[key][i].methods || {}).map(function(m) {
                             return [host[key][i].url, m, host[key][i].methods[m]]
                         });
+                    }).sort(function(a, b) {
+                      return parseInt(b[2]) - parseInt(a[2]);
                     });
                     data = [].concat.apply([], data);
                     Page.body.push(Entry({
@@ -533,6 +545,8 @@ request(window.location.href.replace('#', '') + '/traffic/json', function(error,
                 case 'referrers':
                     var data = Object.keys(host[key] || {}).map(function(k) {
                         return [k, host[key][k]]
+                    }).sort(function(a, b) {
+                      return parseInt(b[1]) - parseInt(a[1]);
                     });
                     Page.body.push(Entry({
                         id: 'referrers-' + host['domain'],
@@ -567,6 +581,8 @@ request(window.location.href.replace('#', '') + '/traffic/json', function(error,
                 case 'status':
                     var data = Object.keys(host[key] || {}).map(function(k) {
                         return [k, host[key][k]]
+                    }).sort(function(a, b) {
+                      return parseInt(b[1]) - parseInt(a[1]);
                     });
                     Page.body.push(Entry({
                         id: 'http-statuses-' + host['domain'],
@@ -601,6 +617,8 @@ request(window.location.href.replace('#', '') + '/traffic/json', function(error,
                 case 'os':
                     var data = Object.keys(host[key] || {}).map(function(k) {
                         return [k, host[key][k]]
+                    }).sort(function(a, b) {
+                      return parseInt(b[1]) - parseInt(a[1]);
                     });
                     Page.body.push(Entry({
                         id: 'os-' + host['domain'],
