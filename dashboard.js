@@ -111,9 +111,10 @@ ex: return { '/distribute': 0.21992199999999998 }
 var parseUrlAverageTime = function(d) {
     var temp = {};
     d.forEach(function(route) {
-        temp[route.url] = _.pluck(route.traffic, 'time').reduce(function(a, b) {
+        var times = _.pluck(route.traffic, 'time');
+        temp[route.url] = (times.reduce(function(a, b) {
             return a + b
-        })
+        }) / times.length);
     });
     return temp;
 }
