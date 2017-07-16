@@ -29,13 +29,13 @@
   },
   "devDependencies": {
     "bootstrap": "^3.3.7",
-    "browserify": "^13.1.0",
-    "browserify-css": "^0.9.1",
+    "browserify": "^14.4.0",
+    "browserify-css": "^0.11.0",
     "c3": "^0.4.11",
     "chance": "^1.0.4",
     "chartjs": "^0.3.24",
-    "d3": "^3.5.17",
-    "eslint": "^3.4.0",
+    "d3": "^4.10.0",
+    "eslint": "^4.2.0",
     "express": "^4.14.0",
     "grunt": "^1.0.1",
     "grunt-contrib-jst": "^1.0.0",
@@ -44,8 +44,8 @@
     "mocha": "^3.0.2",
     "random-ua": "0.0.6",
     "request": "^2.74.0",
-    "socket.io": "^1.4.8",
-    "supertest": "^2.0.0",
-    "uglify-js": "^2.7.3"
+    "socket.io": "^2.0.3",
+    "supertest": "^3.0.0",
+    "uglify-js": "^3.0.25"
   }
 }

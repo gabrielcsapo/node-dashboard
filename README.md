@@ -1,5 +1,7 @@
 # node-dashboard
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/gabrielcsapo/node-dashboard.svg)](https://greenkeeper.io/)
+
 > an express plugin to show route traffic
 
 [![Npm Version](https://img.shields.io/npm/v/node-dashboard.svg)](https://www.npmjs.com/package/node-dashboard)
